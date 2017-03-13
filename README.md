@@ -34,7 +34,7 @@ Of course, code above will render garbage. Here are the props it accepts to sens
 Prop name   =>    Description                    =>   Example
 
 title       =>    The title of the datatable     =>   `"Todos"`
-columns     =>    Columns.                       =>   `tableColumns: [{label: 'Name', field: 'name'}],
+columns     =>    Columns.                       =>   `tableColumns: [{label: 'Name', field: 'name'}]`
 rows        =>    Rows.                          =>   `[{name: "OverCoder", ...}]`
 perPage     =>    Number of rows per.. page      =>   `10`
 ```
