@@ -2,7 +2,7 @@
   "name": "vue-materialize-datatable",
   "version": "0.1.0",
   "description": "Datatable for VueJS with materialize",
-  "author": "Yousef <yousef.su.2000@gmail.com>",
+  "author": "Yousef Sultan <yousef.su.2000@gmail.com>",
   "private": false,
   "main": "./src/DataTable.vue",
   "license": "MIT",
