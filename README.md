@@ -2,6 +2,12 @@
 
 > A fancy Materialize css datatable VueJS component
 
+## Installation
+
+```bash
+npm i vue-materialize-datatable --save
+```
+
 ## Usage
 
 Include the component,
