@@ -2,6 +2,8 @@
 
 > A fancy Materialize css datatable VueJS component
 
+[Screenshot](https://i.imgur.com/VEVPCey.png)
+
 ## Installation
 
 ```bash
