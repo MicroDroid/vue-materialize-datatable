@@ -4,6 +4,8 @@
 
 ![Screenshot](https://i.imgur.com/9V613vT.png)
 
+> Library is still unstable. Bugs, missing features might be present
+
 ## Installation
 
 ```bash
@@ -44,7 +46,8 @@ Prop name   =>    Description                    =>   Example
 title       =>    The title of the datatable     =>   "Todos"
 columns     =>    Columns.                       =>   [{label: 'Name', field: 'name'}]
 rows        =>    Rows.                          =>   [{name: "OverCoder", ...}]
-perPage     =>    Number of rows per.. page      =>   10
+perPage     =>    Number of rows per.. page      =>   10 (default)
+orderable   =>    Cause column-click to order    =>   true (default)
 ```
 
 For columns, `label` is the name of the column, and `field` is the member it's going to display from the row object. The example `rows` array above has objects with field `name`, and because the column has `field: 'name'`, `OverCoder` will be rendered in that column on that row.

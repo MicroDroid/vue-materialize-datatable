@@ -11,7 +11,9 @@
 				<table>
 					<thead>
 						<tr>
-							<th v-for="column in columns">
+							<th v-for="(column, index) in columns"
+								@click="order(index)"
+								:class="orderColumn === index ? (orderType === 'desc' ? 'sorting-desc' : 'sorting-asc') : ''">
 								{{column.label}}
 							</th>
 						</tr>
@@ -19,8 +21,8 @@
 
 					<tbody>
 						<tr v-for="row in processedRows">
-							<td v-for="column in columns">
-								{{ row[column.field] }}
+							<td v-for="(value, key, index) in row">
+								{{ row[columns[index].field] }}
 							</td>
 						</tr>
 					</tbody>
@@ -72,11 +74,14 @@
 			columns: {},
 			rows: {},
 			perPage: {default: 10},
+			orderable: {default: true},
 		},
 
 		data: () => ({
 			currentPage: 1,
-			currentPerPage: 10
+			currentPerPage: 10,
+			orderColumn: -1,
+			orderType: 'asc',
 		}),
 
 		methods: {
@@ -92,12 +97,36 @@
 
 			onTableLength: function(e) {
 				this.currentPerPage = e.target.value;
+			},
+
+			order: function(index) {
+				if (this.orderColumn === index)
+					this.orderType = this.orderType === 'asc' ? 'desc' : 'asc';
+				else
+					this.orderColumn = index;
 			}
 		},
 
 		computed: {
 			processedRows: function() {
-				return this.rows.slice((this.currentPage - 1) * this.currentPerPage, this.currentPerPage === -1 ? this.rows.length : this.currentPage * this.currentPerPage);
+				var computedRows = this.rows.slice((this.currentPage - 1) * this.currentPerPage, this.currentPerPage === -1 ? this.rows.length : this.currentPage * this.currentPerPage);
+				if (this.orderable !== false)
+					computedRows = computedRows.sort((x,y) => {
+						if (!this.columns[this.orderColumn])
+							return 0;
+
+						x = x[this.columns[this.orderColumn].field];
+						if (typeof(x) === 'string')
+							x = x.toLowerCase();
+
+						y = y[this.columns[this.orderColumn].field];
+						if (typeof(y) === 'string')
+							y = y.toLowerCase();
+
+						return (x < y ? -1 : (x > y ? 1 : 0)) * (this.orderType === 'desc' ? -1 : 1);
+					})
+
+				return computedRows;
 			}
 		},
 
@@ -301,14 +330,14 @@
 		outline: none !important;
 	}
 
-	div.material-table table th.sorting_asc,
-	div.material-table table th.sorting_desc {
+	div.material-table table th.sorting-asc,
+	div.material-table table th.sorting-desc {
 		color: rgba(0, 0, 0, 0.87);
 	}
 
 	div.material-table table th.sorting:after,
-	div.material-table table th.sorting_asc:after,
-	div.material-table table th.sorting_desc:after {
+	div.material-table table th.sorting-asc:after,
+	div.material-table table th.sorting-desc:after {
 		font-family: 'Material Icons';
 		font-weight: normal;
 		font-style: normal;
@@ -327,12 +356,12 @@
 	}
 
 	div.material-table table th.sorting:hover:after,
-	div.material-table table th.sorting_asc:after,
-	div.material-table table th.sorting_desc:after {
+	div.material-table table th.sorting-asc:after,
+	div.material-table table th.sorting-desc:after {
 		display: inline-block;
 	}
 
-	div.material-table table th.sorting_desc:after {
+	div.material-table table th.sorting-desc:after {
 		content: "arrow_forward";
 	}
 
