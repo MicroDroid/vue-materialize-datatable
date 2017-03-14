@@ -19,8 +19,8 @@
 
 					<tbody>
 						<tr v-for="row in processedRows">
-							<td v-for="(value, key, index) in row">
-								{{ row[columns[index].field] }}
+							<td v-for="column in columns">
+								{{ row[column.field] }}
 							</td>
 						</tr>
 					</tbody>
