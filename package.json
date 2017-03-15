@@ -1,6 +1,6 @@
 {
   "name": "vue-materialize-datatable",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Datatable for VueJS with materialize",
   "author": "Yousef Sultan <yousef.su.2000@gmail.com>",
   "private": false,
@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "demo": "cd docs && webpack",
-    "build": "webpack" 
+    "build": "webpack"
   },
   "keywords": [
     "Vue",
@@ -41,6 +41,7 @@
     "vue-html-loader": "^1.2.3",
     "vue-loader": "^8.3.0",
     "vue-style-loader": "^1.0.0",
+    "fuse.js": "^2.6.2",
     "webpack": "^1.12.2"
   }
 }

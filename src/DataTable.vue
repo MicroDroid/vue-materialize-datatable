@@ -5,7 +5,21 @@
 				<div class="table-header">
 					<span class="table-title">{{title}}</span>
 					<div class="actions">
-						<!-- Action buttons! yay! -->
+						<a href="javascript:undefined"
+							class="search-toggle waves-effect btn-flat nopadding"
+							v-if="this.searchable"
+							@click="search">
+							<i class="material-icons">search</i>
+						</a>
+					</div>
+				</div>
+				<div v-if="this.searching">
+					<div>
+						<label>
+							<input type="search" id="search-input" class="form-control" placeholder="Search data"
+								:value="searchInput"
+								@input="(e) => {this.searchInput = e.target.value}">
+						</label>
 					</div>
 				</div>
 				<table>
@@ -68,6 +82,8 @@
 </template>
 
 <script>
+	import Fuse from 'fuse.js';
+
 	export default {
 		props: {
 			title: {},
@@ -75,6 +91,7 @@
 			rows: {},
 			perPage: {default: 10},
 			orderable: {default: true},
+			searchable: {default: true},
 		},
 
 		data: () => ({
@@ -82,6 +99,8 @@
 			currentPerPage: 10,
 			orderColumn: -1,
 			orderType: 'asc',
+			searching: false,
+			searchInput: '',
 		}),
 
 		methods: {
@@ -104,12 +123,17 @@
 					this.orderType = this.orderType === 'asc' ? 'desc' : 'asc';
 				else
 					this.orderColumn = index;
+			},
+
+			search: function(e) {
+				this.searching = !this.searching;
 			}
 		},
 
 		computed: {
 			processedRows: function() {
 				var computedRows = this.rows.slice((this.currentPage - 1) * this.currentPerPage, this.currentPerPage === -1 ? this.rows.length : this.currentPage * this.currentPerPage);
+
 				if (this.orderable !== false)
 					computedRows = computedRows.sort((x,y) => {
 						if (!this.columns[this.orderColumn])
@@ -126,6 +150,11 @@
 						return (x < y ? -1 : (x > y ? 1 : 0)) * (this.orderType === 'desc' ? -1 : 1);
 					})
 
+				if (this.searching && this.searchInput)
+					computedRows = (new Fuse(computedRows, {
+						keys: this.columns.map(c => c.field)
+					})).search(this.searchInput);
+
 				return computedRows;
 			}
 		},
@@ -141,28 +170,19 @@
 		padding: 0;
 	}
 
-	div.material-table .hiddensearch {
-		padding: 0 14px 0 24px;
-		border-bottom: solid 1px #DDDDDD;
-		display: none;
-	}
-
-	div.material-table .hiddensearch input {
-		margin: 0;
-		border: transparent 0 !important;
+	#search-input {
+		padding: 16px;
 		height: 48px;
-		color: rgba(0, 0, 0, .84);
+		outline: none;
+		box-sizing: border-box;
+		margin: 0;
 	}
 
-	div.material-table .hiddensearch input:active {
-		border: transparent 0 !important;
-	}
-
-	div.material-table table {
+	table {
 		table-layout: fixed;
 	}
 
-	div.material-table .table-header {
+	.table-header {
 		height: 64px;
 		padding-left: 24px;
 		padding-right: 14px;
@@ -174,27 +194,27 @@
 		border-bottom: solid 1px #DDDDDD;
 	}
 
-	div.material-table .table-header .actions {
+	.table-header .actions {
 		display: -webkit-flex;
 		margin-left: auto;
 	}
 
-	div.material-table .table-header .btn-flat {
+	.table-header .btn-flat {
 			min-width: 36px;
 			padding: 0 8px;
 	}
 
-	div.material-table .table-header input {
+	.table-header input {
 		margin: 0;
 		height: auto;
 	}
 
-	div.material-table .table-header i {
+	.table-header i {
 		color: rgba(0, 0, 0, 0.54);
 		font-size: 24px;
 	}
 
-	div.material-table .table-footer {
+	.table-footer {
 		height: 56px;
 		padding-left: 24px;
 		padding-right: 14px;
@@ -210,16 +230,16 @@
 		color: rgba(0, 0, 0, 0.54);
 	}
 
-	div.material-table .table-footer .datatable-length {
+	.table-footer .datatable-length {
 		display: -webkit-flex;
 		display: flex;
 	}
 
-	div.material-table .table-footer .datatable-length select {
+	.table-footer .datatable-length select {
 		outline: none;
 	}
 
-	div.material-table .table-footer label {
+	.table-footer label {
 		font-size: 12px;
 		color: rgba(0, 0, 0, 0.54);
 		display: -webkit-flex;
@@ -234,7 +254,7 @@
 		justify-content: center;
 	}
 
-	div.material-table .table-footer .select-wrapper {
+	.table-footer .select-wrapper {
 		display: -webkit-flex;
 		display: flex;
 		-webkit-flex-direction: row;
@@ -247,28 +267,28 @@
 		justify-content: center;
 	}
 
-	div.material-table .table-footer .datatable-info,
-	div.material-table .table-footer .datatable-length {
+	.table-footer .datatable-info,
+	.table-footer .datatable-length {
 		margin-right: 32px;
 	}
 
-	div.material-table .table-footer .material-pagination {
+	.table-footer .material-pagination {
 		display: flex;
 		-webkit-display: flex;
 		margin: 0;
 	}
 
-	div.material-table .table-footer .material-pagination li:first-child {
+	.table-footer .material-pagination li:first-child {
 		margin-right: 24px;
 	}
 
-	div.material-table .table-footer .material-pagination li a {
+	.table-footer .material-pagination li a {
 		color: rgba(0, 0, 0, 0.54);
 		padding: 0 8px;
 		font-size: 24px;
 	}
 
-	div.material-table .table-footer .select-wrapper input.select-dropdown {
+	.table-footer .select-wrapper input.select-dropdown {
 		margin: 0;
 		border-bottom: none;
 		height: auto;
@@ -278,7 +298,7 @@
 		text-align: right;
 	}
 
-	div.material-table .table-footer select {
+	.table-footer select {
 		background-color: transparent;
 		width: auto;
 		padding: 0;
@@ -288,12 +308,12 @@
 		margin-left: 20px;
 	}
 
-	div.material-table .table-title {
+	.table-title {
 		font-size: 20px;
 		color: #000;
 	}
 
-	div.material-table table tr td {
+	table tr td {
 		padding: 0 0 0 56px;
 		height: 48px;
 		font-size: 13px;
@@ -304,20 +324,20 @@
 		text-overflow: ellipsis;
 	}
 
-	div.material-table table tr td a {
+	table tr td a {
 		color: inherit;
 	}
 
-	div.material-table table tr td a i {
+	table tr td a i {
 		font-size: 18px;
 		color: rgba(0, 0, 0, 0.54);
 	}
 
-	div.material-table table tr {
+	table tr {
 		font-size: 12px;
 	}
 
-	div.material-table table th {
+	table th {
 		font-size: 12px;
 		font-weight: 500;
 		color: #757575;
@@ -330,14 +350,14 @@
 		outline: none !important;
 	}
 
-	div.material-table table th.sorting-asc,
-	div.material-table table th.sorting-desc {
+	table th.sorting-asc,
+	table th.sorting-desc {
 		color: rgba(0, 0, 0, 0.87);
 	}
 
-	div.material-table table th.sorting:after,
-	div.material-table table th.sorting-asc:after,
-	div.material-table table th.sorting-desc:after {
+	table th.sorting:after,
+	table th.sorting-asc:after,
+	table th.sorting-desc:after {
 		font-family: 'Material Icons';
 		font-weight: normal;
 		font-style: normal;
@@ -355,27 +375,27 @@
 		vertical-align: middle;
 	}
 
-	div.material-table table th.sorting:hover:after,
-	div.material-table table th.sorting-asc:after,
-	div.material-table table th.sorting-desc:after {
+	table th.sorting:hover:after,
+	table th.sorting-asc:after,
+	table th.sorting-desc:after {
 		display: inline-block;
 	}
 
-	div.material-table table th.sorting-desc:after {
+	table th.sorting-desc:after {
 		content: "arrow_forward";
 	}
 
-	div.material-table table tbody tr:hover {
+	table tbody tr:hover {
 		background-color: #EEE;
 	}
 
-	div.material-table table th:first-child,
-	div.material-table table td:first-child {
+	table th:first-child,
+	table td:first-child {
 		padding: 0 0 0 24px;
 	}
 
-	div.material-table table th:last-child,
-	div.material-table table td:last-child {
+	table th:last-child,
+	table td:last-child {
 		padding: 0 14px 0 0;
 	}
 </style>
