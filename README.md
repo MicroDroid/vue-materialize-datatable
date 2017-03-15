@@ -47,6 +47,7 @@ title       =>    The title of the datatable     =>   "Todos"
 columns     =>    Columns.                       =>   [{label: 'Name', field: 'name'}]
 rows        =>    Rows.                          =>   [{name: "OverCoder", ...}]
 perPage     =>    Number of rows per.. page      =>   10 (default)
+onClick     =>    Func. to execute on click      =>   console.log (Row is first param.)
 orderable   =>    Cause column-click to order    =>   true (default)
 searchable  =>    Add fuzzy search functionality =>   true (default)
 ```

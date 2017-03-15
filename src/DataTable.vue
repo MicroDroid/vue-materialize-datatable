@@ -34,7 +34,7 @@
 					</thead>
 
 					<tbody>
-						<tr v-for="row in processedRows">
+						<tr v-for="row in processedRows" :class="onClick ? 'clickable' : ''" @click="click(row)">
 							<td v-for="(value, key, index) in row">
 								{{ row[columns[index].field] }}
 							</td>
@@ -89,6 +89,7 @@
 			title: {},
 			columns: {},
 			rows: {},
+			onClick: {},
 			perPage: {default: 10},
 			orderable: {default: true},
 			searchable: {default: true},
@@ -127,6 +128,11 @@
 
 			search: function(e) {
 				this.searching = !this.searching;
+			},
+
+			click: function(row) {
+				if (this.onClick)
+					this.onClick(row);
 			}
 		},
 
@@ -168,6 +174,10 @@
 <style scoped>
 	div.material-table {
 		padding: 0;
+	}
+
+	tr.clickable {
+		cursor: pointer;
 	}
 
 	#search-input {
