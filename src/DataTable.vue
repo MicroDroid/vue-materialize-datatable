@@ -27,7 +27,7 @@
 						<tr>
 							<th v-for="(column, index) in columns"
 								@click="order(index)"
-								:class="orderColumn === index ? (orderType === 'desc' ? 'sorting-desc' : 'sorting-asc') : ''">
+								:class="'sorting ' + (orderColumn === index ? (orderType === 'desc' ? 'sorting-desc' : 'sorting-asc') : '')">
 								{{column.label}}
 							</th>
 						</tr>
@@ -120,10 +120,12 @@
 			},
 
 			order: function(index) {
-				if (this.orderColumn === index)
+				if (this.orderColumn === index) {
 					this.orderType = this.orderType === 'asc' ? 'desc' : 'asc';
-				else
+				} else {
+					this.orderType = 'asc';
 					this.orderColumn = index;
+				}
 			},
 
 			search: function(e) {
