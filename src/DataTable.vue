@@ -14,7 +14,7 @@
 					</div>
 				</div>
 				<div v-if="this.searching">
-					<div>
+					<div id="search-input-container">
 						<label>
 							<input type="search" id="search-input" class="form-control" placeholder="Search data"
 								:value="searchInput"
@@ -171,11 +171,15 @@
 	}
 
 	#search-input {
-		padding: 16px;
-		height: 48px;
-		outline: none;
-		box-sizing: border-box;
 		margin: 0;
+		border: transparent 0 !important;
+		height: 48px;
+		color: rgba(0, 0, 0, .84);
+	}
+
+	#search-input-container {
+		padding: 0 14px 0 24px;
+		border-bottom: solid 1px #DDDDDD;
 	}
 
 	table {
