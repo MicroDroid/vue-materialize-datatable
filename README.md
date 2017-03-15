@@ -2,7 +2,7 @@
 
 > A fancy Materialize css datatable VueJS component
 
-![Screenshot](https://i.imgur.com/9V613vT.png)
+![Screenshot](http://i.imgur.com/00Iqffi.png)
 
 > Library is still unstable. Bugs, missing features might be present
 
