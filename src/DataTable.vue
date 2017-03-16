@@ -1,81 +1,76 @@
 <template>
-	<div class="row">
-		<div class="col s12">
-			<div class="card material-table">
-				<div class="table-header">
-					<span class="table-title">{{title}}</span>
-					<div class="actions">
-						<a href="javascript:undefined"
-							class="search-toggle waves-effect btn-flat nopadding"
-							v-if="this.searchable"
-							@click="search">
-							<i class="material-icons">search</i>
+	<div class="card material-table">
+		<div class="table-header">
+			<span class="table-title">{{title}}</span>
+			<div class="actions">
+				<a href="javascript:undefined"
+					class="search-toggle waves-effect btn-flat nopadding"
+					v-if="this.searchable"
+					@click="search">
+					<i class="material-icons">search</i>
+				</a>
+			</div>
+		</div>
+		<div v-if="this.searching">
+			<div id="search-input-container">
+				<label>
+					<input type="search" id="search-input" class="form-control" placeholder="Search data"
+						:value="searchInput"
+						@input="(e) => {this.searchInput = e.target.value}">
+				</label>
+			</div>
+		</div>
+		<table>
+			<thead>
+				<tr>
+					<th v-for="(column, index) in columns"
+						@click="order(index)"
+						:class="'sorting ' + (orderColumn === index ? (orderType === 'desc' ? 'sorting-desc' : 'sorting-asc') : '')">
+						{{column.label}}
+					</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr v-for="row in processedRows" :class="onClick ? 'clickable' : ''" @click="click(row)">
+					<td v-for="column in columns">
+						{{ row[column.field] }}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div class="table-footer">
+			<div class="datatable-length">
+				<label>
+					<span>Rows per page:</span>
+					<select class="browser-default" @change="onTableLength">
+						<option value="10">10</option>
+						<option value="20">20</option>
+						<option value="30">30</option>
+						<option value="40">40</option>
+						<option value="50">50</option>
+						<option value="-1">All</option>
+					</select>
+				</label>
+			</div>
+			<div class="datatable-info">
+				{{(currentPage - 1) * currentPerPage ? (currentPage - 1) * currentPerPage : 1}}
+					-{{Math.min(rows.length, currentPerPage * currentPage)}} of {{rows.length}}
+			</div>
+			<div>
+				<ul class="material-pagination">
+					<li>
+						<a href="javascript:undefined" class="waves-effect btn-flat" @click.prevent="previousPage" tabindex="0">
+							<i class="material-icons">chevron_left</i>
 						</a>
-					</div>
-				</div>
-				<div v-if="this.searching">
-					<div id="search-input-container">
-						<label>
-							<input type="search" id="search-input" class="form-control" placeholder="Search data"
-								:value="searchInput"
-								@input="(e) => {this.searchInput = e.target.value}">
-						</label>
-					</div>
-				</div>
-				<table>
-					<thead>
-						<tr>
-							<th v-for="(column, index) in columns"
-								@click="order(index)"
-								:class="'sorting ' + (orderColumn === index ? (orderType === 'desc' ? 'sorting-desc' : 'sorting-asc') : '')">
-								{{column.label}}
-							</th>
-						</tr>
-					</thead>
-
-					<tbody>
-						<tr v-for="row in processedRows" :class="onClick ? 'clickable' : ''" @click="click(row)">
-							<td v-for="column in columns">
-								{{ row[column.field] }}
-							</td>
-						</tr>
-					</tbody>
-				</table>
-
-				<div class="table-footer">
-					<div class="datatable-length">
-						<label>
-							<span>Rows per page:</span>
-							<select class="browser-default" @change="onTableLength">
-								<option value="10">10</option>
-								<option value="20">20</option>
-								<option value="30">30</option>
-								<option value="40">40</option>
-								<option value="50">50</option>
-								<option value="-1">All</option>
-							</select>
-						</label>
-					</div>
-					<div class="datatable-info">
-						{{(currentPage - 1) * currentPerPage ? (currentPage - 1) * currentPerPage : 1}}
-							-{{Math.min(rows.length, currentPerPage * currentPage)}} of {{rows.length}}
-					</div>
-					<div>
-						<ul class="material-pagination">
-							<li>
-								<a href="javascript:undefined" class="waves-effect btn-flat" @click.prevent="previousPage" tabindex="0">
-									<i class="material-icons">chevron_left</i>
-								</a>
-							</li>
-							<li>
-								<a href="javascript:undefined" class="waves-effect btn-flat" @click.prevent="nextPage" tabindex="0">
-									<i class="material-icons">chevron_right</i>
-								</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-
+					</li>
+					<li>
+						<a href="javascript:undefined" class="waves-effect btn-flat" @click.prevent="nextPage" tabindex="0">
+							<i class="material-icons">chevron_right</i>
+						</a>
+					</li>
+				</ul>
 			</div>
 		</div>
 	</div>
