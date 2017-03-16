@@ -25,7 +25,7 @@
 				<tr>
 					<th v-for="(column, index) in columns"
 						@click="order(index)"
-						:class="(orderable ? 'sorting' : '')
+						:class="(orderable ? 'sorting ' : '')
 							+ (orderColumn === index ?
 								(orderType === 'desc' ? 'sorting-desc' : 'sorting-asc')
 								: '')">
