@@ -50,6 +50,7 @@ perPage     =>    Number of rows per.. page      =>   10 (default)
 onClick     =>    Func. to execute on click      =>   console.log (Row is first param.)
 sortable    =>    Cause column-click to sort     =>   true (default)
 searchable  =>    Add fuzzy search functionality =>   true (default)
+paginate    =>    Add footer next/prev. btns     =>   true (default)
 ```
 
 For columns, `label` is the name of the column, and `field` is the member it's going to display from the row object. The example `rows` array above has objects with field `name`, and because the column has `field: 'name'`, `OverCoder` will be rendered in that column on that row.

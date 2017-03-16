@@ -45,7 +45,7 @@
 			</tbody>
 		</table>
 
-		<div class="table-footer">
+		<div class="table-footer" v-if="paginate">
 			<div class="datatable-length">
 				<label>
 					<span>Rows per page:</span>
@@ -93,6 +93,7 @@
 			perPage: {default: 10},
 			sortable: {default: true},
 			searchable: {default: true},
+			paginate: {default: true},
 		},
 
 		data: () => ({
@@ -142,7 +143,10 @@
 
 		computed: {
 			processedRows: function() {
-				var computedRows = this.rows.slice((this.currentPage - 1) * this.currentPerPage, this.currentPerPage === -1 ? this.rows.length : this.currentPage * this.currentPerPage);
+				var computedRows = this.rows;
+
+				if (this.paginate)
+					computedRows = this.rows.slice((this.currentPage - 1) * this.currentPerPage, this.currentPerPage === -1 ? this.rows.length : this.currentPage * this.currentPerPage);
 
 				if (this.sortable !== false)
 					computedRows = computedRows.sort((x,y) => {
