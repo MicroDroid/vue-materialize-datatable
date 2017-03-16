@@ -35,7 +35,7 @@
 			</thead>
 
 			<tbody>
-				<tr v-for="row in processedRows" :class="onClick ? 'clickable' : ''" @click="click(row)">
+				<tr v-for="(row, index) in processedRows" :class="onClick ? 'clickable' : ''" @click="click(row, index)">
 					<td v-for="column in columns">
 						{{ row[column.field] }}
 					</td>
@@ -132,9 +132,9 @@
 				this.searching = !this.searching;
 			},
 
-			click: function(row) {
+			click: function(row, index) {
 				if (this.onClick)
-					this.onClick(row);
+					this.onClick(row, index);
 			}
 		},
 
