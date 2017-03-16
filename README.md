@@ -51,6 +51,7 @@ onClick     =>    Func. to execute on click      =>   console.log (Row is first 
 sortable    =>    Cause column-click to sort     =>   true (default)
 searchable  =>    Add fuzzy search functionality =>   true (default)
 paginate    =>    Add footer next/prev. btns     =>   true (default)
+exportable  =>    Add button to export to Excel  =>   true (default)
 ```
 
 For columns, `label` is the name of the column, and `field` is the member it's going to display from the row object. The example `rows` array above has objects with field `name`, and because the column has `field: 'name'`, `OverCoder` will be rendered in that column on that row.

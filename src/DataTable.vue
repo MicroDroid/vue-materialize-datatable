@@ -5,6 +5,12 @@
 			<div class="actions">
 				<a href="javascript:undefined"
 					class="search-toggle waves-effect btn-flat nopadding"
+					v-if="this.exportable"
+					@click="exportExcel">
+					<i class="material-icons">description</i>
+				</a>
+				<a href="javascript:undefined"
+					class="search-toggle waves-effect btn-flat nopadding"
 					v-if="this.searchable"
 					@click="search">
 					<i class="material-icons">search</i>
@@ -20,7 +26,7 @@
 				</label>
 			</div>
 		</div>
-		<table>
+		<table ref="table">
 			<thead>
 				<tr>
 					<th v-for="(column, index) in columns"
@@ -94,6 +100,7 @@
 			sortable: {default: true},
 			searchable: {default: true},
 			paginate: {default: true},
+			exportable: {default: true},
 		},
 
 		data: () => ({
@@ -138,6 +145,21 @@
 			click: function(row, index) {
 				if (this.onClick)
 					this.onClick(row, index);
+			},
+
+			exportExcel: function() {
+				const mimeType = 'data:application/vnd.ms-excel';
+				const html = this.$refs.table.outerHTML.replace(/ /g, '%20');
+
+				const d = new Date();
+
+				var dummy = document.createElement('a');
+				dummy.href = mimeType + ', ' + html;
+				dummy.download = this.title.toLowerCase().replace(/ /g, '-') 
+					+ '-' + d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate()
+					+ '-' + d.getHours() + '-' + d.getMinutes() + '-' + d.getSeconds()
+					+'.xls';
+				dummy.click();
 			}
 		},
 
