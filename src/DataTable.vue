@@ -417,7 +417,8 @@
 		display: inline-block;
 	}
 
-	table th.sorting-desc:after {
+	table th.sorting-desc:after,
+	table th.sorting-desc:before {
 		content: "arrow_forward";
 	}
 
