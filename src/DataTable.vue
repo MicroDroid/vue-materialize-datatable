@@ -415,6 +415,14 @@
 		padding-left: 56px;
 		vertical-align: middle;
 		outline: none !important;
+
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	}
+
+	table th:hover {
+		overflow: visible;
+		text-overflow: initial;
 	}
 
 	table th.sorting-asc,
