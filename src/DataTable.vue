@@ -4,13 +4,19 @@
 			<span class="table-title">{{title}}</span>
 			<div class="actions">
 				<a href="javascript:undefined"
-					class="search-toggle waves-effect btn-flat nopadding"
+					class="waves-effect btn-flat nopadding"
+					v-if="this.printable"
+					@click="print">
+					<i class="material-icons">print</i>
+				</a>
+				<a href="javascript:undefined"
+					class="waves-effect btn-flat nopadding"
 					v-if="this.exportable"
 					@click="exportExcel">
 					<i class="material-icons">description</i>
 				</a>
 				<a href="javascript:undefined"
-					class="search-toggle waves-effect btn-flat nopadding"
+					class="waves-effect btn-flat nopadding"
 					v-if="this.searchable"
 					@click="search">
 					<i class="material-icons">search</i>
@@ -101,6 +107,7 @@
 			searchable: {default: true},
 			paginate: {default: true},
 			exportable: {default: true},
+			printable: {default: true},
 		},
 
 		data: () => ({
@@ -160,6 +167,13 @@
 					+ '-' + d.getHours() + '-' + d.getMinutes() + '-' + d.getSeconds()
 					+'.xls';
 				dummy.click();
+			},
+
+			print: function() {
+				let win = window.open("");
+				win.document.write(this.$refs.table.outerHTML);
+				win.print();
+				win.close();
 			}
 		},
 
