@@ -24,10 +24,10 @@
 			<thead>
 				<tr>
 					<th v-for="(column, index) in columns"
-						@click="order(index)"
-						:class="(orderable ? 'sorting ' : '')
-							+ (orderColumn === index ?
-								(orderType === 'desc' ? 'sorting-desc' : 'sorting-asc')
+						@click="sort(index)"
+						:class="(sortable ? 'sorting ' : '')
+							+ (sortColumn === index ?
+								(sortType === 'desc' ? 'sorting-desc' : 'sorting-asc')
 								: '')
 							+ (column.numeric ? ' numeric' : '')"
 						:style="{width: column.width ? column.width : 'auto'}">
@@ -91,15 +91,15 @@
 			rows: {},
 			onClick: {},
 			perPage: {default: 10},
-			orderable: {default: true},
+			sortable: {default: true},
 			searchable: {default: true},
 		},
 
 		data: () => ({
 			currentPage: 1,
 			currentPerPage: 10,
-			orderColumn: -1,
-			orderType: 'asc',
+			sortColumn: -1,
+			sortType: 'asc',
 			searching: false,
 			searchInput: '',
 		}),
@@ -119,14 +119,14 @@
 				this.currentPerPage = e.target.value;
 			},
 
-			order: function(index) {
-				if (!this.orderable)
+			sort: function(index) {
+				if (!this.sortable)
 					return;
-				if (this.orderColumn === index) {
-					this.orderType = this.orderType === 'asc' ? 'desc' : 'asc';
+				if (this.sortColumn === index) {
+					this.sortType = this.sortType === 'asc' ? 'desc' : 'asc';
 				} else {
-					this.orderType = 'asc';
-					this.orderColumn = index;
+					this.sortType = 'asc';
+					this.sortColumn = index;
 				}
 			},
 
@@ -144,16 +144,16 @@
 			processedRows: function() {
 				var computedRows = this.rows.slice((this.currentPage - 1) * this.currentPerPage, this.currentPerPage === -1 ? this.rows.length : this.currentPage * this.currentPerPage);
 
-				if (this.orderable !== false)
+				if (this.sortable !== false)
 					computedRows = computedRows.sort((x,y) => {
-						if (!this.columns[this.orderColumn])
+						if (!this.columns[this.sortColumn])
 							return 0;
 
 						const cook = (x) => {
-							x = x[this.columns[this.orderColumn].field];
+							x = x[this.columns[this.sortColumn].field];
 							if (typeof(x) === 'string') {
 								x = x.toLowerCase();
-								if (this.columns[this.orderColumn].numeric)
+								if (this.columns[this.sortColumn].numeric)
 									x = x.indexOf('.') >= 0 ? parseFloat(x) : parseInt(x);
 							}
 							return x;
@@ -162,7 +162,7 @@
 						x = cook(x);
 						y = cook(y);
 
-						return (x < y ? -1 : (x > y ? 1 : 0)) * (this.orderType === 'desc' ? -1 : 1);
+						return (x < y ? -1 : (x > y ? 1 : 0)) * (this.sortType === 'desc' ? -1 : 1);
 					})
 
 				if (this.searching && this.searchInput)
