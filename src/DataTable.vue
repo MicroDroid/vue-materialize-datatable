@@ -148,13 +148,18 @@
 						if (!this.columns[this.orderColumn])
 							return 0;
 
-						x = x[this.columns[this.orderColumn].field];
-						if (typeof(x) === 'string')
-							x = x.toLowerCase();
+						const cook = (x) => {
+							x = x[this.columns[this.orderColumn].field];
+							if (typeof(x) === 'string') {
+								x = x.toLowerCase();
+								if (this.columns[this.orderColumn].numeric)
+									x = x.indexOf('.') >= 0 ? parseFloat(x) : parseInt(x);
+							}
+							return x;
+						}
 
-						y = y[this.columns[this.orderColumn].field];
-						if (typeof(y) === 'string')
-							y = y.toLowerCase();
+						x = cook(x);
+						y = cook(y);
 
 						return (x < y ? -1 : (x > y ? 1 : 0)) * (this.orderType === 'desc' ? -1 : 1);
 					})
