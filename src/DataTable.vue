@@ -28,7 +28,8 @@
 						:class="(orderable ? 'sorting ' : '')
 							+ (orderColumn === index ?
 								(orderType === 'desc' ? 'sorting-desc' : 'sorting-asc')
-								: '')">
+								: '')
+							+ (column.numeric ? ' numeric' : '')">
 						{{column.label}}
 					</th>
 				</tr>
@@ -36,7 +37,7 @@
 
 			<tbody>
 				<tr v-for="(row, index) in processedRows" :class="onClick ? 'clickable' : ''" @click="click(row, index)">
-					<td v-for="column in columns">
+					<td v-for="column in columns" :class="column.numeric ? 'numeric' : ''">
 						{{ row[column.field] }}
 					</td>
 				</tr>
@@ -192,6 +193,10 @@
 	#search-input-container {
 		padding: 0 14px 0 24px;
 		border-bottom: solid 1px #DDDDDD;
+	}
+
+	th.numeric, td.numeric {
+		text-align: right;
 	}
 
 	table {
@@ -373,7 +378,10 @@
 
 	table th.sorting:after,
 	table th.sorting-asc:after,
-	table th.sorting-desc:after {
+	table th.sorting-desc:after,
+	table th.sorting:before,
+	table th.sorting-asc:before,
+	table th.sorting-desc:before  {
 		font-family: 'Material Icons';
 		font-weight: normal;
 		font-style: normal;
@@ -389,6 +397,18 @@
 		-webkit-transform: rotate(90deg);
 		display: none;
 		vertical-align: middle;
+	}
+
+	table th.numeric.sorting:hover:before,
+	table th.numeric.sorting-asc:before,
+	table th.numeric.sorting-desc:before {
+		display: inline-block;
+	}
+
+	table th.numeric.sorting:hover:after,
+	table th.numeric.sorting-asc:after,
+	table th.numeric.sorting-desc:after {
+		display: none;
 	}
 
 	table th.sorting:hover:after,
