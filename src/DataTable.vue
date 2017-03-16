@@ -29,7 +29,8 @@
 							+ (orderColumn === index ?
 								(orderType === 'desc' ? 'sorting-desc' : 'sorting-asc')
 								: '')
-							+ (column.numeric ? ' numeric' : '')">
+							+ (column.numeric ? ' numeric' : '')"
+						:style="{width: column.width ? column.width : 'auto'}">
 						{{column.label}}
 					</th>
 				</tr>
