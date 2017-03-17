@@ -345,10 +345,6 @@
 		margin: 0;
 	}
 
-	.table-footer .material-pagination li:first-child {
-		margin-right: 24px;
-	}
-
 	.table-footer .material-pagination li a {
 		color: rgba(0, 0, 0, 0.54);
 		padding: 0 8px;
@@ -479,14 +475,13 @@
 	table tbody tr:hover {
 		background-color: #EEE;
 	}
-
-	table th:first-child,
-	table td:first-child {
-		padding: 0 0 0 24px;
-	}
-
+	
 	table th:last-child,
 	table td:last-child {
 		padding: 0 14px 0 0;
+	}
+
+	table th:first-child, table td:first-child {
+		padding-left: 24px;
 	}
 </style>
