@@ -51,7 +51,7 @@
 			<tbody>
 				<tr v-for="(row, index) in processedRows" :class="onClick ? 'clickable' : ''" @click="click(row, index)">
 					<td v-for="column in columns" :class="column.numeric ? 'numeric' : ''">
-						{{ row[column.field] }}
+						{{ collect(row, column.field) }}
 					</td>
 				</tr>
 			</tbody>
@@ -174,6 +174,26 @@
 				win.document.write(this.$refs.table.outerHTML);
 				win.print();
 				win.close();
+			},
+
+			dig: function(obj, selector) {
+				var result = obj;
+				const splitter = selector.split('.');
+				for (let i = 0; i < splitter.length; i++)
+					if (typeof(result) === 'undefined')
+						return undefined;
+					else
+						result = result[splitter[i]];
+				return result;
+			},
+
+			collect: function(obj, field) {
+				if (typeof(field) === 'function')
+					return field(obj);
+				else if (typeof(field) === 'string')
+					return dig(obj, field);
+				else
+					return undefined;
 			}
 		},
 
@@ -190,7 +210,7 @@
 							return 0;
 
 						const cook = (x) => {
-							x = x[this.columns[this.sortColumn].field];
+							x = collect(x, this.columns[this.sortColumn].field);
 							if (typeof(x) === 'string') {
 								x = x.toLowerCase();
 								if (this.columns[this.sortColumn].numeric)
@@ -207,7 +227,7 @@
 
 				if (this.searching && this.searchInput)
 					computedRows = (new Fuse(computedRows, {
-						keys: this.columns.map(c => c.field)
+						keys: this.columns.map(c => collect(c, field))
 					})).search(this.searchInput);
 
 				return computedRows;
