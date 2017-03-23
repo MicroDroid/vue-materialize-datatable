@@ -210,7 +210,7 @@
 							return 0;
 
 						const cook = (x) => {
-							x = collect(x, this.columns[this.sortColumn].field);
+							x = this.collect(x, this.columns[this.sortColumn].field);
 							if (typeof(x) === 'string') {
 								x = x.toLowerCase();
 								if (this.columns[this.sortColumn].numeric)
