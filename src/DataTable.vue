@@ -203,6 +203,8 @@
 				}
 
 				table += '</tbody></table>';
+
+				return table;
 			},
 
 			dig: function(obj, selector) {
