@@ -188,7 +188,7 @@
 					table += '</tr>';
 				}
 
-				table += '</tr></thead><tbody>';
+				table += '</thead><tbody>';
 
 				for (var i = 0; i < this.rows.length; i++) {
 					const row = this.rows[i];
