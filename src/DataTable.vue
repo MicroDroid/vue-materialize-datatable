@@ -493,8 +493,7 @@
 		display: inline-block;
 	}
 
-	table th.sorting-desc:after,
-	table th.sorting-desc:before {
+	table th.sorting-desc:after {
 		content: "arrow_forward";
 	}
 
