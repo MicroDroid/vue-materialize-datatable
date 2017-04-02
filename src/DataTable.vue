@@ -190,8 +190,8 @@
 
 				table += '</tr></thead><tbody>';
 
-				for (var i = 0; i < processedRows.length; i++) {
-					const row = processedRows[i];
+				for (var i = 0; i < this.rows.length; i++) {
+					const row = this.rows[i];
 					table += '<tr>';
 					table +=	'<td>';
 					table +=		collect(row, column.field);
