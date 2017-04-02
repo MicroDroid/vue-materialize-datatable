@@ -165,7 +165,7 @@
 				dummy.download = this.title.toLowerCase().replace(/ /g, '-') 
 					+ '-' + d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate()
 					+ '-' + d.getHours() + '-' + d.getMinutes() + '-' + d.getSeconds()
-					+'.xlsx';
+					+'.xls';
 				dummy.click();
 			},
 
@@ -179,27 +179,27 @@
 			renderTable: function() {
 				var table = '<table><thead>';
 
+				table += '<tr>';
 				for (var i = 0; i < this.columns.length; i++) {
 					const column = this.columns[i];
-					table += '<tr>';
-					table += 	'<th style="width: ' + (column.width ? column.width : 'auto') + '">';
-					table += 		column.label;
-					table += 	'</th>';
-					table += '</tr>';
+					table += '<th>';
+					table += 	column.label;
+					table += '</th>';
 				}
+				table += '</tr>';
 
 				table += '</thead><tbody>';
 
 				for (var i = 0; i < this.rows.length; i++) {
 					const row = this.rows[i];
+					table += '<tr>';
 					for (var j = 0; j < this.columns.length; j++) {
 						const column = this.columns[j];
-						table += '<tr>';
-						table +=	'<td>';
-						table +=		this.collect(row, column.field);
-						table += 	'</td>';
-						table += '</tr>';
+						table += '<td>';
+						table +=	this.collect(row, column.field);
+						table += '</td>';
 					}
+					table += '</tr>';
 				}
 
 				table += '</tbody></table>';
