@@ -192,8 +192,8 @@
 
 				for (var i = 0; i < this.rows.length; i++) {
 					const row = this.rows[i];
-					for (var i = 0; i < this.columns.length; i++) {
-						const column = this.columns[i];
+					for (var j = 0; j < this.columns.length; j++) {
+						const column = this.columns[j];
 						table += '<tr>';
 						table +=	'<td>';
 						table +=		this.collect(row, column.field);
