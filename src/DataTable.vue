@@ -191,7 +191,7 @@
 				if (typeof(field) === 'function')
 					return field(obj);
 				else if (typeof(field) === 'string')
-					return dig(obj, field);
+					return this.dig(obj, field);
 				else
 					return undefined;
 			}
@@ -227,7 +227,7 @@
 
 				if (this.searching && this.searchInput)
 					computedRows = (new Fuse(computedRows, {
-						keys: this.columns.map(c => collect(c, field))
+						keys: this.columns.map(c => this.collect(c, field))
 					})).search(this.searchInput);
 
 				return computedRows;
