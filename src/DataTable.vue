@@ -156,7 +156,7 @@
 
 			exportExcel: function() {
 				const mimeType = 'data:application/vnd.ms-excel';
-				const html = this.$refs.table.outerHTML.replace(/ /g, '%20');
+				const html = this.renderTable().replace(/ /g, '%20');
 
 				const d = new Date();
 
@@ -171,9 +171,35 @@
 
 			print: function() {
 				let win = window.open("");
-				win.document.write(this.$refs.table.outerHTML);
+				win.document.write(this.renderTable());
 				win.print();
 				win.close();
+			},
+
+			renderTable: function() {
+				var table = '<table><thead>';
+
+				for (var i = 0; i < this.columns.length; i++) {
+					const column = this.columns[i];
+					table += '<tr>';
+					table += 	'<th style="width: ' + (column.width ? column.width : 'auto') + '">';
+					table += 		column.label;
+					table += 	'</th>';
+					table += '</tr>';
+				}
+
+				table += '</tr></thead><tbody>';
+
+				for (var i = 0; i < processedRows.length; i++) {
+					const row = processedRows[i];
+					table += '<tr>';
+					table +=	'<td>';
+					table +=		collect(row, column.field);
+					table += 	'</td>';
+					table += '</tr>';
+				}
+
+				table += '</tbody></table>';
 			},
 
 			dig: function(obj, selector) {
