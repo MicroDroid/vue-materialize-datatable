@@ -192,11 +192,14 @@
 
 				for (var i = 0; i < this.rows.length; i++) {
 					const row = this.rows[i];
-					table += '<tr>';
-					table +=	'<td>';
-					table +=		this.collect(row, column.field);
-					table += 	'</td>';
-					table += '</tr>';
+					for (var i = 0; i < this.columns.length; i++) {
+						const column = this.columns[i];
+						table += '<tr>';
+						table +=	'<td>';
+						table +=		this.collect(row, column.field);
+						table += 	'</td>';
+						table += '</tr>';
+					}
 				}
 
 				table += '</tbody></table>';
