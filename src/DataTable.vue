@@ -261,10 +261,6 @@
 		border-bottom: solid 1px #DDDDDD;
 	}
 
-	th.numeric, td.numeric {
-		text-align: right;
-	}
-
 	table {
 		table-layout: fixed;
 	}
@@ -447,11 +443,7 @@
 	}
 
 	table th.sorting:after,
-	table th.sorting-asc:after,
-	table th.sorting-desc:after,
-	table th.sorting:before,
-	table th.sorting-asc:before,
-	table th.sorting-desc:before  {
+	table th.sorting-asc:after  {
 		font-family: 'Material Icons';
 		font-weight: normal;
 		font-style: normal;
@@ -467,18 +459,6 @@
 		-webkit-transform: rotate(90deg);
 		display: none;
 		vertical-align: middle;
-	}
-
-	table th.numeric.sorting:hover:before,
-	table th.numeric.sorting-asc:before,
-	table th.numeric.sorting-desc:before {
-		display: inline-block;
-	}
-
-	table th.numeric.sorting:hover:after,
-	table th.numeric.sorting-asc:after,
-	table th.numeric.sorting-desc:after {
-		display: none;
 	}
 
 	table th.sorting:hover:after,
