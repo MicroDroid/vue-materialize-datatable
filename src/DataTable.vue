@@ -194,7 +194,7 @@
 					const row = this.rows[i];
 					table += '<tr>';
 					table +=	'<td>';
-					table +=		collect(row, column.field);
+					table +=		this.collect(row, column.field);
 					table += 	'</td>';
 					table += '</tr>';
 				}
