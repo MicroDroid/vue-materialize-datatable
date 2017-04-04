@@ -41,18 +41,19 @@ And then.. use the component:
 Of course, code above will render garbage. Here are the props it accepts to sensible data:
 
 ```
-Prop name   =>    Description                    =>   Example
+Prop name     =>    Description                    =>   Example
 
-title       =>    The title of the datatable     =>   "Todos"
-columns     =>    Columns.                       =>   [{label: 'Name', field: 'name', numeric: false}]
-rows        =>    Rows.                          =>   [{name: "OverCoder", ...}]
-perPage     =>    Number of rows per.. page      =>   10 (default)
-onClick     =>    Func. to execute on click      =>   console.log (Row is first param.)
-sortable    =>    Cause column-click to sort     =>   true (default)
-searchable  =>    Add fuzzy search functionality =>   true (default)
-paginate    =>    Add footer next/prev. btns     =>   true (default)
-exportable  =>    Add button to export to Excel  =>   true (default)
-printable   =>    Add printing functionality     =>   true (default)
+title         =>    The title of the datatable     =>   "Todos"
+columns       =>    Columns.                       =>   [{label: 'Name', field: 'name', numeric: false}]
+rows          =>    Rows.                          =>   [{name: "OverCoder", ...}]
+perPage       =>    Number of rows per.. page      =>   10 (default)
+onClick       =>    Func. to execute on click      =>   console.log (Row is first param.)
+sortable      =>    Cause column-click to sort     =>   true (default)
+searchable    =>    Add fuzzy search functionality =>   true (default)
+paginate      =>    Add footer next/prev. btns     =>   true (default)
+exportable    =>    Add button to export to Excel  =>   true (default)
+printable     =>    Add printing functionality     =>   true (default)
+customButtons =>    Custom buttons thingy          =>   [{hide: false, icon: 'search', onclick: console.log}]
 ```
 
 For columns, `label` is the name of the column, and `field` is the member it's going to display from the row object. The example `rows` array above has objects with field `name`, and because the column has `field: 'name'`, `OverCoder` will be rendered in that column on that row.

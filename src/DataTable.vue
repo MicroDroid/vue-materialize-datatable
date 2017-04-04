@@ -21,6 +21,13 @@
 					@click="search">
 					<i class="material-icons">search</i>
 				</a>
+
+				<a v-for="button in customButtons" href="javascript:undefined"
+					class="waves-effect btn-flat nopadding"
+					v-if="button.hide ? !button.hide : true"
+					@click="button.onclick">
+					<i class="material-icons">{{button.icon}}</i>
+				</a>
 			</div>
 		</div>
 		<div v-if="this.searching">
@@ -102,6 +109,7 @@
 			columns: {},
 			rows: {},
 			onClick: {},
+			customButtons: {default: []},
 			perPage: {default: 10},
 			sortable: {default: true},
 			searchable: {default: true},
