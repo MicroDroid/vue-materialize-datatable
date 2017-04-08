@@ -109,7 +109,7 @@
 			columns: {},
 			rows: {},
 			onClick: {},
-			customButtons: {default: []},
+			customButtons: {default: () => []},
 			perPage: {default: 10},
 			sortable: {default: true},
 			searchable: {default: true},
@@ -266,7 +266,7 @@
 
 				if (this.searching && this.searchInput)
 					computedRows = (new Fuse(computedRows, {
-						keys: this.columns.map(c => this.collect(c, field))
+						keys: this.columns.map(c => c.field)
 					})).search(this.searchInput);
 
 				return computedRows;
