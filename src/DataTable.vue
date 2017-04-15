@@ -3,6 +3,12 @@
 		<div class="table-header">
 			<span class="table-title">{{title}}</span>
 			<div class="actions">
+				<a v-for="button in customButtons" href="javascript:undefined"
+				   class="waves-effect btn-flat nopadding"
+				   v-if="button.hide ? !button.hide : true"
+				   @click="button.onclick">
+					<i class="material-icons">{{button.icon}}</i>
+				</a>
 				<a href="javascript:undefined"
 					class="waves-effect btn-flat nopadding"
 					v-if="this.printable"
@@ -20,13 +26,6 @@
 					v-if="this.searchable"
 					@click="search">
 					<i class="material-icons">search</i>
-				</a>
-
-				<a v-for="button in customButtons" href="javascript:undefined"
-					class="waves-effect btn-flat nopadding"
-					v-if="button.hide ? !button.hide : true"
-					@click="button.onclick">
-					<i class="material-icons">{{button.icon}}</i>
 				</a>
 			</div>
 		</div>
@@ -56,7 +55,7 @@
 			</thead>
 
 			<tbody>
-				<tr v-for="(row, index) in processedRows" :class="onClick ? 'clickable' : ''" @click="click(row, index)">
+				<tr v-for="(row, index) in paginated" :class="onClick ? 'clickable' : ''" @click="click(row, index)">
 					<td v-for="column in columns" :class="column.numeric ? 'numeric' : ''">
 						{{ collect(row, column.field) }}
 					</td>
@@ -80,7 +79,7 @@
 			</div>
 			<div class="datatable-info">
 				{{(currentPage - 1) * currentPerPage ? (currentPage - 1) * currentPerPage : 1}}
-					-{{Math.min(rows.length, currentPerPage * currentPage)}} of {{rows.length}}
+					-{{Math.min(processedRows.length, currentPerPage * currentPage)}} of {{processedRows.length}}
 			</div>
 			<div>
 				<ul class="material-pagination">
@@ -129,7 +128,7 @@
 
 		methods: {
 			nextPage: function() {
-				if (this.rows.length > this.currentPerPage * this.currentPage)
+				if (this.processedRows.length > this.currentPerPage * this.currentPage)
 					++this.currentPage;
 			},
 
@@ -240,9 +239,6 @@
 			processedRows: function() {
 				var computedRows = this.rows;
 
-				if (this.paginate)
-					computedRows = this.rows.slice((this.currentPage - 1) * this.currentPerPage, this.currentPerPage === -1 ? this.rows.length : this.currentPage * this.currentPerPage);
-
 				if (this.sortable !== false)
 					computedRows = computedRows.sort((x,y) => {
 						if (!this.columns[this.sortColumn])
@@ -252,7 +248,7 @@
 							x = this.collect(x, this.columns[this.sortColumn].field);
 							if (typeof(x) === 'string') {
 								x = x.toLowerCase();
-								if (this.columns[this.sortColumn].numeric)
+							 	if (this.columns[this.sortColumn].numeric)
 									x = x.indexOf('.') >= 0 ? parseFloat(x) : parseInt(x);
 							}
 							return x;
@@ -269,8 +265,15 @@
 						keys: this.columns.map(c => c.field)
 					})).search(this.searchInput);
 
-				return computedRows;
-			}
+                return computedRows;
+			},
+
+			paginated: function() {
+			    var paginatedRows = this.processedRows;
+                if (this.paginate)
+                    paginatedRows = paginatedRows.slice((this.currentPage - 1) * this.currentPerPage, this.currentPerPage === -1 ? paginatedRows.length : this.currentPage * this.currentPerPage);
+                return paginatedRows;
+            }
 		},
 
 		mounted: function() {
@@ -516,7 +519,7 @@
 	
 	table th:last-child,
 	table td:last-child {
-		padding: 0 14px 0 0;
+		padding-right: 14px;
 	}
 
 	table th:first-child, table td:first-child {
