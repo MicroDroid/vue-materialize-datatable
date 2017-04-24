@@ -56,8 +56,10 @@
 
 			<tbody>
 				<tr v-for="(row, index) in paginated" :class="onClick ? 'clickable' : ''" @click="click(row, index)">
-					<td v-for="column in columns" :class="column.numeric ? 'numeric' : ''">
+					<td v-for="column in columns" :class="column.numeric ? 'numeric' : ''" v-if="!column.html">
 						{{ collect(row, column.field) }}
+					</td>
+					<td v-for="column in columns" :class="column.numeric ? 'numeric' : ''" v-html="collect(row, column.field)" v-if="column.html">
 					</td>
 				</tr>
 			</tbody>
@@ -271,7 +273,7 @@
 			paginated: function() {
 			    var paginatedRows = this.processedRows;
                 if (this.paginate)
-                    paginatedRows = paginatedRows.slice((this.currentPage - 1) * this.currentPerPage, this.currentPerPage === -1 ? paginatedRows.length : this.currentPage * this.currentPerPage);
+                    paginatedRows = paginatedRows.slice((this.currentPage - 1) * this.currentPerPage, this.currentPerPage === -1 ? paginatedRows.length + 1 : this.currentPage * this.currentPerPage);
                 return paginatedRows;
             }
 		},

@@ -44,7 +44,7 @@ Of course, code above will render garbage. Here are the props it accepts to sens
 Prop name     =>    Description                    =>   Example
 
 title         =>    The title of the datatable     =>   "Todos"
-columns       =>    Columns.                       =>   [{label: 'Name', field: 'name', numeric: false}]
+columns       =>    Columns.                       =>   [{label: 'Name', field: 'name', numeric: false, html: false}]
 rows          =>    Rows.                          =>   [{name: "OverCoder", ...}]
 perPage       =>    Number of rows per.. page      =>   10 (default)
 onClick       =>    Func. to execute on click      =>   console.log (Row is first param.)
