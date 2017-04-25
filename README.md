@@ -1,4 +1,4 @@
-# vue-materialize-datatable
+# vue-materialize-datatable [![NPM version](https://badge.fury.io/js/vue-materialize-datatable.svg)](https://badge.fury.io/js/vue-materialize-datatable)
 
 > A fancy Materialize CSS datatable VueJS component
 
