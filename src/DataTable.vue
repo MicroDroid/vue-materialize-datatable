@@ -51,6 +51,7 @@
 						:style="{width: column.width ? column.width : 'auto'}">
 						{{column.label}}
 					</th>
+					<slot name="thead-tr"></slot>
 				</tr>
 			</thead>
 
@@ -61,6 +62,7 @@
 					</td>
 					<td v-for="column in columns" :class="column.numeric ? 'numeric' : ''" v-html="collect(row, column.field)" v-if="column.html">
 					</td>
+					<slot name="tbody-tr" :row="row"></slot>
 				</tr>
 			</tbody>
 		</table>
