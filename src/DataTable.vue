@@ -108,7 +108,7 @@
 
 	export default {
 		props: {
-			title: {},
+			title: '',
 			columns: {},
 			rows: {},
 			onClick: {},
