@@ -33,7 +33,7 @@ npm i vue-materialize-datatable --save
 
 Or, you can do it in Sass/CSS:
 
-```
+```CSS
 @import url(http://fonts.googleapis.com/icon?family=Material+Icons);
 ```
 
