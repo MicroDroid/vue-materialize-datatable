@@ -266,6 +266,8 @@
 
 				if (this.searching && this.searchInput)
 					computedRows = (new Fuse(computedRows, {
+						threshold: 0,
+						distance: 0,
 						keys: this.columns.map(c => c.field)
 					})).search(this.searchInput);
 
