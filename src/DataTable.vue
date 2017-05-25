@@ -116,6 +116,10 @@
 			perPage: {default: 10},
 			sortable: {default: true},
 			searchable: {default: true},
+			exactSearch: {
+				type: Boolean,
+				default: false
+			},
 			paginate: {default: true},
 			exportable: {default: true},
 			printable: {default: true},
@@ -265,12 +269,17 @@
 						return (x < y ? -1 : (x > y ? 1 : 0)) * (this.sortType === 'desc' ? -1 : 1);
 					})
 
-				if (this.searching && this.searchInput)
-					computedRows = (new Fuse(computedRows, {
-						threshold: 0,
-						distance: 0,
-						keys: this.columns.map(c => c.field)
-					})).search(this.searchInput);
+				if (this.searching && this.searchInput) {
+					const searchConfig = { keys: this.columns.map(c => c.field) }
+
+					if(this.exactSearch){
+						//return only exact matches
+						searchConfig.threshold = 0,
+						searchConfig.distance = 0
+					}
+
+					computedRows = (new Fuse(computedRows, searchConfig)).search(this.searchInput);
+				}
 
                 return computedRows;
 			},
