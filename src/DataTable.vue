@@ -461,6 +461,10 @@
 		text-overflow: ellipsis;
 	}
 
+	table td, table th {
+    	border-radius: 0;
+	}
+
 	table tr td a {
 		color: inherit;
 	}
