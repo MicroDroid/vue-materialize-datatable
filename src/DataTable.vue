@@ -226,11 +226,14 @@
 			dig: function(obj, selector) {
 				var result = obj;
 				const splitter = selector.split('.');
-				for (let i = 0; i < splitter.length; i++)
-					if (typeof(result) === 'undefined')
+
+				for (let i = 0; i < splitter.length; i++){
+					if (result == undefined)
 						return undefined;
-					else
-						result = result[splitter[i]];
+						
+					result = result[splitter[i]];
+				}
+				
 				return result;
 			},
 
