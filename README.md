@@ -87,6 +87,8 @@ rows          =>    Rows.                          =>   [                       
                                                         ]
 perPage       =>    Number of rows per.. page      =>   10 (default)            // Results per page
 onClick       =>    Func. to execute on click      =>   console.log             // Function, row 1st param
+clickable     =>    Rows are clickable.            =>   true (default)          //row is passed in the event payload
+                    Will fire `row-click` event                                 //see react to click on row (below)
 sortable      =>    Cause column-click to sort     =>   true (default)          // Whether sortable
 searchable    =>    Add fuzzy search functionality =>   true (default)          // Whether searchable
 exactSearch   =>    Disable fuzzy search           =>   true (default)          // Whether only exact matches are returned
@@ -100,4 +102,29 @@ customButtons =>    Custom buttons thingy          =>   [                       
                                                                 onclick: aFunc, // Click handler
                                                             }
                                                         ]
+```
+
+### React to click on row
+
+The datatable will emit the `row-click` event if `clickable` is set to `true` (default).
+
+The events payload will contain the `row object`, you can bind to the event like this:
+
+```html
+<datatable v-on:row-click="onRowClick"></datatable>
+
+<script>
+var app = new Vue({
+  el: '#app',
+  ...
+  methods: {
+    onRowClick: function (row) {
+      //row contains the clicked object from `rows`
+      console.log(row)
+    }
+  },
+})
+</script>
+...
+
 ```
