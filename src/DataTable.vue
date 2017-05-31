@@ -56,7 +56,7 @@
 			</thead>
 
 			<tbody>
-				<tr v-for="(row, index) in paginated" :class="onClick ? 'clickable' : ''" @click="click(row, index)">
+				<tr v-for="(row, index) in paginated" :class="{ clickable : clickable }" @click="click(row)">
 					<td v-for="column in columns" :class="column.numeric ? 'numeric' : ''" v-if="!column.html">
 						{{ collect(row, column.field) }}
 					</td>
@@ -111,7 +111,7 @@
 			title: '',
 			columns: {},
 			rows: {},
-			onClick: {},
+			clickable: {default: true},
 			customButtons: {default: () => []},
 			perPage: {default: 10},
 			sortable: {default: true},
@@ -164,9 +164,12 @@
 				this.searching = !this.searching;
 			},
 
-			click: function(row, index) {
-				if (this.onClick)
-					this.onClick(row, index);
+			click: function(row) {
+				if(!this.clickable){
+					return
+				}
+
+				this.$emit('row-click', row)
 			},
 
 			exportExcel: function() {
