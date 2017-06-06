@@ -169,6 +169,11 @@
 					return
 				}
 
+				if(getSelection().toString()){
+					// Return if some text is selected instead of firing the row-click event.
+					return
+				}
+
 				this.$emit('row-click', row)
 			},
 
