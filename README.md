@@ -87,8 +87,8 @@ rows          =>    Rows.                          =>   [                       
                                                         ]
 perPage       =>    Number of rows per.. page      =>   10 (default)            // Results per page
 onClick       =>    Func. to execute on click      =>   console.log             // Function, row 1st param
-clickable     =>    Rows are clickable.            =>   true (default)          //row is passed in the event payload
-                    Will fire `row-click` event                                 //see react to click on row (below)
+clickable     =>    Rows are clickable.            =>   true (default)          // Row is passed in the event payload
+                    Will fire `row-click` event                                 // See react to click on row (below)
 sortable      =>    Cause column-click to sort     =>   true (default)          // Whether sortable
 searchable    =>    Add fuzzy search functionality =>   true (default)          // Whether searchable
 exactSearch   =>    Disable fuzzy search           =>   true (default)          // Whether only exact matches are returned
