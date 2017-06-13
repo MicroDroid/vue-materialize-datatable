@@ -283,6 +283,14 @@
 				if (this.searching && this.searchInput) {
 					const searchConfig = { keys: this.columns.map(c => c.field) }
 
+					// Enable searching of numbers (non-string)
+					// Temporary fix of https://github.com/krisk/Fuse/issues/144
+				    	searchConfig.getFn = function (obj, path) {
+						if(Number.isInteger(obj[path]))
+						return JSON.stringify(obj[path]);
+					    	return obj[path];
+					}
+
 					if(this.exactSearch){
 						//return only exact matches
 						searchConfig.threshold = 0,
