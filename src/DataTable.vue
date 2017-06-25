@@ -57,10 +57,9 @@
 
 			<tbody>
 				<tr v-for="(row, index) in paginated" :class="{ clickable : clickable }" @click="click(row)">
-					<td v-for="column in columns" :class="column.numeric ? 'numeric' : ''" v-if="!column.html">
-						{{ collect(row, column.field) }}
-					</td>
-					<td v-for="column in columns" :class="column.numeric ? 'numeric' : ''" v-html="collect(row, column.field)" v-if="column.html">
+					<td v-for="column in columns" :class=" { numeric : column.numeric } ">
+						<div v-if="!column.html"> {{ collect(row, column.field) }} </div>
+						<div v-if="column.html" v-html="collect(row, column.field)"></div>						
 					</td>
 					<slot name="tbody-tr" :row="row"></slot>
 				</tr>
@@ -241,7 +240,7 @@
 						
 					result = result[splitter[i]];
 				}
-				
+
 				return result;
 			},
 
