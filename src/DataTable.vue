@@ -254,13 +254,9 @@
 
 		computed: {
 			perPageOptions: function() {
-				var options = this.perPage;
+				var options = (Array.isArray(this.perPage) && this.perPage) || [10, 20, 30, 40, 50];
 
-				// Init default array if it's not valid
-				if (!Array.isArray(options)) {
-					options = [10, 20, 30, 40, 50];
-				}
-
+				// Force numbers
 				options = options.map(function (v) {
 					return parseInt(v);
 				});

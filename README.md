@@ -86,7 +86,7 @@ rows           =>    Rows.                          =>   [                      
                                                             }
                                                         ]
 perPage        =>    Numbers of rows per page       =>   [10, 20, 30, 40, 50] (default) // Results per page
-defaultperPage =>    Default rows per page          =>   10 (default)            // Default results per page, otherwise it will be the first value of perPage
+defaultPerPage =>    Default rows per page          =>   10 (default)            // Default results per page, otherwise it will be the first value of perPage
 onClick        =>    Func. to execute on click      =>   console.log             // Function, row 1st param
 clickable      =>    Rows are clickable.            =>   true (default)          // Row is passed in the event payload
                     Will fire `row-click` event                                  // See react to click on row (below)
