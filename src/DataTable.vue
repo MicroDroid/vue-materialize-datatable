@@ -257,17 +257,13 @@
 				var options = (Array.isArray(this.perPage) && this.perPage) || [10, 20, 30, 40, 50];
 
 				// Force numbers
-				options = options.map(function (v) {
-					return parseInt(v);
-				});
+				options = options.map( v => parseInt(v));
 
 				// Set current page to first value
 				this.currentPerPage = options[0];
 
 				// Sort options
-				options.sort(function(a, b) {
-					return a - b;
-				});
+				options.sort((a,b) => a - b);
 
 				// And add "All"
 				options.push(-1);
