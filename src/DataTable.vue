@@ -71,12 +71,9 @@
 				<label>
 					<span>Rows per page:</span>
 					<select class="browser-default" @change="onTableLength">
-						<option value="10">10</option>
-						<option value="20">20</option>
-						<option value="30">30</option>
-						<option value="40">40</option>
-						<option value="50">50</option>
-						<option value="-1">All</option>
+						<option v-for="option in perPageOptions" :value="option" :selected="option === currentPerPage">
+					    {{ option === -1 ? 'All' : option }}
+					  </option>
 					</select>
 				</label>
 			</div>
@@ -112,7 +109,7 @@
 			rows: {},
 			clickable: {default: true},
 			customButtons: {default: () => []},
-			perPage: {default: 10},
+			perPage: {default: [10, 20, 30, 40, 50]},
 			sortable: {default: true},
 			searchable: {default: true},
 			exactSearch: {
@@ -255,6 +252,25 @@
 		},
 
 		computed: {
+			perPageOptions: function() {
+				var options = this.perPage;
+
+				// Init default array if it's not valid
+				if (!Array.isArray(options)) {
+					options = [10, 20, 30, 40, 50];
+				}
+
+				// Set current page to first value
+				this.currentPerPage = options[0];
+
+				// Sort options
+				options.sort();
+
+				// And add "All"
+				options.push(-1);
+
+				return options;
+			},
 			processedRows: function() {
 				var computedRows = this.rows;
 
