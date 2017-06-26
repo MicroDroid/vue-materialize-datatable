@@ -86,10 +86,10 @@ rows           =>    Rows.                          =>   [                      
                                                             }
                                                         ]
 perPage        =>    Numbers of rows per page       =>   [10, 20, 30, 40, 50] (default) // Results per page
-defaultperPage =>    Default rows per page          =>   10 (default) // Default results per page, otherwise it will be the first value of perPage
+defaultperPage =>    Default rows per page          =>   10 (default)            // Default results per page, otherwise it will be the first value of perPage
 onClick        =>    Func. to execute on click      =>   console.log             // Function, row 1st param
 clickable      =>    Rows are clickable.            =>   true (default)          // Row is passed in the event payload
-                    Will fire `row-click` event                                 // See react to click on row (below)
+                    Will fire `row-click` event                                  // See react to click on row (below)
 sortable       =>    Cause column-click to sort     =>   true (default)          // Whether sortable
 searchable     =>    Add fuzzy search functionality =>   true (default)          // Whether searchable
 exactSearch    =>    Disable fuzzy search           =>   true (default)          // Whether only exact matches are returned
@@ -135,7 +135,7 @@ var app = new Vue({
 You can specify the options of rows per page with the `perPage` prop. The first value will be the default value and the array will be sorted, so you can put whatever number you want. 
 
 ```html
-<!-- The default value will be 500 -->
+<!-- The default value will be 100 -->
 <datatable :perPage="[100, 10, 25, 50, 500]"></datatable>
 
 ```
@@ -147,7 +147,7 @@ The options will be rendered as `[10, 20, 50, 100, 500]`
 Otherwise, you can specify the default rows per page with the `defaultPerPage` prop.
 
 ```html
-<!-- The default value will be 500 -->
+<!-- The default value will be 100 -->
 <datatable :perPage="[10, 25, 50, 100, 500]" :defaultPerPage="100"></datatable>
 
 ```
