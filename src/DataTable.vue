@@ -71,7 +71,7 @@
 				<label>
 					<span>Rows per page:</span>
 					<select class="browser-default" @change="onTableLength">
-						<option v-for="option in perPageOptions" :value="option" :selected="option === currentPerPage">
+						<option v-for="option in perPageOptions" :value="option" :selected="option == currentPerPage">
 					    {{ option === -1 ? 'All' : option }}
 					  </option>
 					</select>
@@ -264,7 +264,9 @@
 				this.currentPerPage = options[0];
 
 				// Sort options
-				options.sort();
+				options.sort(function(a, b) {
+					return a - b;
+				});
 
 				// And add "All"
 				options.push(-1);
