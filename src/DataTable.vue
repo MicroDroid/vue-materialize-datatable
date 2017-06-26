@@ -110,6 +110,7 @@
 			clickable: {default: true},
 			customButtons: {default: () => []},
 			perPage: {default: [10, 20, 30, 40, 50]},
+			defaultPerPage: {default: null},
 			sortable: {default: true},
 			searchable: {default: true},
 			exactSearch: {
@@ -260,6 +261,10 @@
 					options = [10, 20, 30, 40, 50];
 				}
 
+				options = options.map(function (v) {
+					return parseInt(v);
+				});
+
 				// Set current page to first value
 				this.currentPerPage = options[0];
 
@@ -270,6 +275,11 @@
 
 				// And add "All"
 				options.push(-1);
+
+				// If defaultPerPage is provided and it's a valid option, set as current per page
+				if (options.indexOf(this.defaultPerPage) > -1) {
+					this.currentPerPage = parseInt(this.defaultPerPage);
+				}
 
 				return options;
 			},
