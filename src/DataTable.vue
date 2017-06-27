@@ -7,25 +7,25 @@
 				   class="waves-effect btn-flat nopadding"
 				   v-if="button.hide ? !button.hide : true"
 				   @click="button.onclick">
-					<i class="material-icons">{{button.icon}}</i>
+           <i :class="['mi mi-' + button.icon]"></i>
 				</a>
 				<a href="javascript:undefined"
 					class="waves-effect btn-flat nopadding"
 					v-if="this.printable"
 					@click="print">
-					<i class="material-icons">print</i>
+					<i class="mi mi-print"></i>
 				</a>
 				<a href="javascript:undefined"
 					class="waves-effect btn-flat nopadding"
 					v-if="this.exportable"
 					@click="exportExcel">
-					<i class="material-icons">description</i>
+          <i class="mi mi-description"></i>
 				</a>
 				<a href="javascript:undefined"
 					class="waves-effect btn-flat nopadding"
 					v-if="this.searchable"
 					@click="search">
-					<i class="material-icons">search</i>
+          <i class="mi mi-search"></i>
 				</a>
 			</div>
 		</div>
@@ -85,12 +85,12 @@
 				<ul class="material-pagination">
 					<li>
 						<a href="javascript:undefined" class="waves-effect btn-flat" @click.prevent="previousPage" tabindex="0">
-							<i class="material-icons">chevron_left</i>
+              <i class="mi mi-chevron_left"></i>
 						</a>
 					</li>
 					<li>
 						<a href="javascript:undefined" class="waves-effect btn-flat" @click.prevent="nextPage" tabindex="0">
-							<i class="material-icons">chevron_right</i>
+							<i class="mi mi-chevron_right"></i>
 						</a>
 					</li>
 				</ul>
@@ -527,9 +527,8 @@
 		padding-left: 56px;
 		vertical-align: middle;
 		outline: none !important;
-
-	    overflow: hidden;
-	    text-overflow: ellipsis;
+    overflow: hidden;
+    text-overflow: ellipsis;
 	}
 
 	table th:hover {
@@ -555,7 +554,7 @@
 		word-wrap: normal;
 		-webkit-font-feature-settings: 'liga';
 		-webkit-font-smoothing: antialiased;
-		content: "arrow_back";
+		content: "\e5c4";
 		-webkit-transform: rotate(90deg);
 		display: none;
 		vertical-align: middle;
@@ -568,7 +567,7 @@
 	}
 
 	table th.sorting-desc:after {
-		content: "arrow_forward";
+		content: "\e5c4";
 	}
 
 	table tbody tr:hover {
