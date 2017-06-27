@@ -7,25 +7,25 @@
 				   class="waves-effect btn-flat nopadding"
 				   v-if="button.hide ? !button.hide : true"
 				   @click="button.onclick">
-           <i :class="['mi mi-' + button.icon]"></i>
+					<i class="material-icons">{{button.icon}}</i>
 				</a>
 				<a href="javascript:undefined"
 					class="waves-effect btn-flat nopadding"
 					v-if="this.printable"
 					@click="print">
-					<i class="mi mi-print"></i>
+					<i class="material-icons">print</i>
 				</a>
 				<a href="javascript:undefined"
 					class="waves-effect btn-flat nopadding"
 					v-if="this.exportable"
 					@click="exportExcel">
-          <i class="mi mi-description"></i>
+					<i class="material-icons">description</i>
 				</a>
 				<a href="javascript:undefined"
 					class="waves-effect btn-flat nopadding"
 					v-if="this.searchable"
 					@click="search">
-          <i class="mi mi-search"></i>
+					<i class="material-icons">search</i>
 				</a>
 			</div>
 		</div>
@@ -85,12 +85,12 @@
 				<ul class="material-pagination">
 					<li>
 						<a href="javascript:undefined" class="waves-effect btn-flat" @click.prevent="previousPage" tabindex="0">
-              <i class="mi mi-chevron_left"></i>
+							<i class="material-icons">chevron_left</i>
 						</a>
 					</li>
 					<li>
 						<a href="javascript:undefined" class="waves-effect btn-flat" @click.prevent="nextPage" tabindex="0">
-							<i class="mi mi-chevron_right"></i>
+							<i class="material-icons">chevron_right</i>
 						</a>
 					</li>
 				</ul>
@@ -337,6 +337,7 @@
 </script>
 
 <style scoped>
+  @import "~material-design-icons-iconfont/dist/material-design-icons";
 	div.material-table {
 		padding: 0;
 	}
@@ -527,8 +528,9 @@
 		padding-left: 56px;
 		vertical-align: middle;
 		outline: none !important;
-    overflow: hidden;
-    text-overflow: ellipsis;
+
+	    overflow: hidden;
+	    text-overflow: ellipsis;
 	}
 
 	table th:hover {
@@ -554,7 +556,7 @@
 		word-wrap: normal;
 		-webkit-font-feature-settings: 'liga';
 		-webkit-font-smoothing: antialiased;
-		content: "\e5c4";
+		content: "arrow_back";
 		-webkit-transform: rotate(90deg);
 		display: none;
 		vertical-align: middle;
@@ -567,7 +569,7 @@
 	}
 
 	table th.sorting-desc:after {
-		content: "\e5c4";
+		content: "arrow_forward";
 	}
 
 	table tbody tr:hover {
