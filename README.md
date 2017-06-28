@@ -27,6 +27,14 @@ npm i vue-materialize-datatable --save
 
 **You also need to include Material Design icons.** You can use something like:
 
+With npm, you can achieve this running `npm i material-design-icons-iconfont --save` and then including it in your css:
+
+```CSS
+@import "~material-design-icons-iconfont/dist/material-design-icons";
+```
+
+If you prefer an HTML version:
+
 ```HTML
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 ```
