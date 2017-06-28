@@ -25,24 +25,30 @@
 npm i vue-materialize-datatable --save
 ```
 
-**You also need to include Material Design icons.** You can use something like:
+**You also need to include Material Design icons.** You have two ways of doing this:
 
-With npm, you can achieve this running `npm i material-design-icons-iconfont --save` and then including it in your css:
-
-```CSS
-@import "~material-design-icons-iconfont/dist/material-design-icons";
-```
-
-If you prefer an HTML version:
+The first and the recommended way is loading via Google's CDN, by add this tag to your HTML
 
 ```HTML
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 ```
 
-Or, you can do it in Sass/CSS:
+Or this in your CSS/Sass files:
 
 ```CSS
 @import url(http://fonts.googleapis.com/icon?family=Material+Icons);
+```
+
+**Alternatively**, you can use the NPM package and add the font to your bundle by:
+
+```
+npm i material-design-icons-iconfont -S
+```
+
+and then include it in your Sass/CSS files
+
+```CSS
+@import "~material-design-icons-iconfont/dist/material-design-icons";
 ```
 
 ## Usage
