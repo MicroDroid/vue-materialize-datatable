@@ -19,6 +19,10 @@
  - Really, really efficient.. handles thousands of rows flawlessly
  - And much more..
 
+## Requirements
+ - [`materialize-css`](https://www.npmjs.com/package/materialize-css) (and **NOT** any other MD library!)
+ - VueJS 2
+
 ## Installation
 
 ```bash
@@ -27,7 +31,7 @@ npm i vue-materialize-datatable --save
 
 **You also need to include Material Design icons.** You have two ways of doing this:
 
-The first and the recommended way is loading via Google's CDN, by add this tag to your HTML
+The first and the recommended way is loading via Google's CDN, by adding this tag to your HTML
 
 ```HTML
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
