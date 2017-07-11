@@ -109,7 +109,7 @@
 			rows: {},
 			clickable: {default: true},
 			customButtons: {default: () => []},
-			perPage: {default: [10, 20, 30, 40, 50]},
+			perPage: {default: () => [10, 20, 30, 40, 50]},
 			defaultPerPage: {default: null},
 			sortable: {default: true},
 			searchable: {default: true},
