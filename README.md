@@ -10,6 +10,7 @@
 ## Features
  - Sorting, with numerical sorting
  - Pagination
+ - Localization
  - Fuzzy searching
  - Excel export
  - Printing
@@ -122,6 +123,15 @@ customButtons  =>    Custom buttons thingy          =>   [                      
                                                             }
                                                         ]
 ```
+
+### Localization
+
+You can use the property `locale` to set the display language. Available languages:
+
+- `en` (default)
+- `ar`
+
+> You can very easily contribute a locale. Just clone `locales/en.json` and `require` in `locales/index.js`
 
 ### React to click on row
 

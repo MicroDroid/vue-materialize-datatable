@@ -67,19 +67,26 @@
 		</table>
 
 		<div class="table-footer" v-if="paginate">
-			<div class="datatable-length">
+			<div :class="{'datatable-length': true, 'rtl': lang.__is_rtl}">
 				<label>
-					<span>Rows per page:</span>
+					<span>{{lang['rows_per_page']}}:</span>
 					<select class="browser-default" @change="onTableLength">
 						<option v-for="option in perPageOptions" :value="option" :selected="option == currentPerPage">
-					    {{ option === -1 ? 'All' : option }}
+					    {{ option === -1 ? lang['all'] : option }}
 					  </option>
 					</select>
 				</label>
 			</div>
-			<div class="datatable-info">
-				{{(currentPage - 1) * currentPerPage ? (currentPage - 1) * currentPerPage : 1}}
-					-{{Math.min(processedRows.length, currentPerPage * currentPage)}} of {{processedRows.length}}
+			<div :class="{'datatable-info': true, 'rtl': lang.__is_rtl}">
+				<span>{{(currentPage - 1) * currentPerPage ? (currentPage - 1) * currentPerPage : 1}}
+					-{{Math.min(processedRows.length, currentPerPage * currentPage)}}
+				</span>
+				<span>
+					{{lang['out_of_pages']}}
+				</span>
+				<span>
+					{{processedRows.length}}
+				</span>
 			</div>
 			<div>
 				<ul class="material-pagination">
@@ -101,6 +108,7 @@
 
 <script>
 	import Fuse from 'fuse.js';
+	import locales from './locales';
 
 	export default {
 		props: {
@@ -120,6 +128,7 @@
 			paginate: {default: true},
 			exportable: {default: true},
 			printable: {default: true},
+			locale: {default: 'en'},
 		},
 
 		data: () => ({
@@ -327,10 +336,16 @@
                 if (this.paginate)
                     paginatedRows = paginatedRows.slice((this.currentPage - 1) * this.currentPerPage, this.currentPerPage === -1 ? paginatedRows.length + 1 : this.currentPage * this.currentPerPage);
                 return paginatedRows;
+            },
+
+            lang: function() {
+				return this.locale in locales ? locales[this.locale] : locales['en'];
             }
 		},
 
 		mounted: function() {
+			if (!(this.locale in locales))
+				console.error(`vue-materialize-datable: Invalid locale '${this.locale}'`);
 			this.currentPerPage = this.currentPerPage
 		}
 	}
@@ -582,5 +597,9 @@
 
 	table th:first-child, table td:first-child {
 		padding-left: 24px;
+	}
+
+	.rtl {
+		direction: rtl;
 	}
 </style>
