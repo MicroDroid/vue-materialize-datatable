@@ -1,5 +1,6 @@
 {
 	"rows_per_page": "Rows per page",
 	"out_of_pages": "of",
-	"all": "All"
+	"all": "All",
+	"search_data": "Search data"
 }

@@ -32,7 +32,7 @@
 		<div v-if="this.searching">
 			<div id="search-input-container">
 				<label>
-					<input type="search" id="search-input" class="form-control" placeholder="Search data"
+					<input type="search" id="search-input" class="form-control" :placeholder="lang['search_data']"
 						:value="searchInput"
 						@input="(e) => {this.searchInput = e.target.value}">
 				</label>
