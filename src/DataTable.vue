@@ -196,6 +196,7 @@
 					+ '-' + d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate()
 					+ '-' + d.getHours() + '-' + d.getMinutes() + '-' + d.getSeconds()
 					+'.xls';
+				document.body.appendChild(dummy);
 				dummy.click();
 			},
 
