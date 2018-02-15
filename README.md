@@ -128,10 +128,11 @@ customButtons  =>    Custom buttons thingy          =>   [                      
 
 You can use the property `locale` to set the display language. Available languages:
 
-- `en` (default)
-- `ar`
-- `es`
-- `cat`
+- `en` (English, default)
+- `ar` (Arabic)
+- `es` (Spanish)
+- `cat` (Catalan)
+- `br` (Brazilian Portuguese)
 
 > You can very easily contribute a locale. Just clone `locales/en.json` and `require` in `locales/index.js`
 
