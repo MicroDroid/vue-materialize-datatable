@@ -315,9 +315,10 @@
 					// Enable searching of numbers (non-string)
 					// Temporary fix of https://github.com/krisk/Fuse/issues/144
 					searchConfig.getFn = (obj, path) => {
-						if(Number.isInteger(this.dig(obj, path)))
-							return JSON.stringify(this.dig(obj, path));
-						return this.dig(obj, path);
+						const property = this.dig(obj, path);
+						if(Number.isInteger(property))
+							return JSON.stringify(property);
+						return property;
 					}
 
 					if(this.exactSearch){
