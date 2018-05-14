@@ -72,7 +72,7 @@
 					<span>{{lang['rows_per_page']}}:</span>
 					<select class="browser-default" @change="onTableLength">
 						<option v-for="option in perPageOptions" :value="option" :selected="option == currentPerPage">
-					    {{ option === -1 ? lang['all'] : option }}
+						{{ option === -1 ? lang['all'] : option }}
 					  </option>
 					</select>
 				</label>
@@ -314,10 +314,10 @@
 
 					// Enable searching of numbers (non-string)
 					// Temporary fix of https://github.com/krisk/Fuse/issues/144
-				    searchConfig.getFn = (obj, path) => {
+					searchConfig.getFn = (obj, path) => {
 						if(Number.isInteger(this.dig(obj, path)))
 							return JSON.stringify(this.dig(obj, path));
-				    	return this.dig(obj, path);
+						return this.dig(obj, path);
 					}
 
 					if(this.exactSearch){
@@ -329,19 +329,19 @@
 					computedRows = (new Fuse(computedRows, searchConfig)).search(this.searchInput);
 				}
 
-                return computedRows;
+				return computedRows;
 			},
 
 			paginated: function() {
-			    var paginatedRows = this.processedRows;
-                if (this.paginate)
-                    paginatedRows = paginatedRows.slice((this.currentPage - 1) * this.currentPerPage, this.currentPerPage === -1 ? paginatedRows.length + 1 : this.currentPage * this.currentPerPage);
-                return paginatedRows;
-            },
+				var paginatedRows = this.processedRows;
+				if (this.paginate)
+					paginatedRows = paginatedRows.slice((this.currentPage - 1) * this.currentPerPage, this.currentPerPage === -1 ? paginatedRows.length + 1 : this.currentPage * this.currentPerPage);
+				return paginatedRows;
+			},
 
-            lang: function() {
+			lang: function() {
 				return this.locale in locales ? locales[this.locale] : locales['en'];
-            }
+			}
 		},
 
 		mounted: function() {
@@ -516,7 +516,7 @@
 	}
 
 	table td, table th {
-    	border-radius: 0;
+		border-radius: 0;
 	}
 
 	table tr td a {
@@ -544,8 +544,8 @@
 		vertical-align: middle;
 		outline: none !important;
 
-	    overflow: hidden;
-	    text-overflow: ellipsis;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 	table th:hover {
