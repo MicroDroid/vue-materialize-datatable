@@ -152,7 +152,7 @@
 			},
 
 			onTableLength: function(e) {
-				this.currentPerPage = e.target.value;
+				this.currentPerPage = parseInt(e.target.value);
 			},
 
 			sort: function(index) {
