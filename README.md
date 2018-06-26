@@ -182,3 +182,25 @@ Otherwise, you can specify the default rows per page with the `defaultPerPage` p
 <datatable :perPage="[10, 25, 50, 100, 500]" :defaultPerPage="100"></datatable>
 
 ```
+
+### Row buttons
+
+Alright actually this is a hack. We probably should've implemented actual support for this but for now, here's an example on how to achieve something similar to the screenshot above:
+
+```HTML
+<datatable title="News" ...>
+	<th slot="thead-tr">
+		Actions
+	</th>
+	<template slot="tbody-tr" scope="props">
+		<td>
+			<button class="btn red darken-2 waves-effect waves-light compact-btn"
+					@click="(e) => deleteItem(props.row, e)">
+				<i class="material-icons white-text">delete</i>
+			</button>
+		</td>
+	</template>
+</datatable>
+```
+
+Feel free to copy paste the code above, heh.
