@@ -3,10 +3,12 @@
 		<div class="table-header">
 			<span class="table-title">{{title}}</span>
 			<div class="actions">
-				<a v-for="button in customButtons" href="javascript:undefined"
+				<a v-for="(button, index) in customButtons" href="javascript:undefined"
 				   class="waves-effect btn-flat nopadding"
 				   v-if="button.hide ? !button.hide : true"
-				   @click="button.onclick">
+				   @click="button.onclick"
+				   :key="index"
+				   >
 					<i class="material-icons">{{button.icon}}</i>
 				</a>
 				<a href="javascript:undefined"
@@ -42,6 +44,7 @@
 			<thead>
 				<tr>
 					<th v-for="(column, index) in columns"
+						:key="index"
 						@click="sort(index)"
 						:class="(sortable ? 'sorting ' : '')
 							+ (sortColumn === index ?
@@ -56,8 +59,8 @@
 			</thead>
 
 			<tbody>
-				<tr v-for="(row, index) in paginated" :class="{ clickable : clickable }" @click="click(row)">
-					<td v-for="column in columns" :class=" { numeric : column.numeric } ">
+				<tr v-for="(row, index) in paginated" :class="{ clickable : clickable }" :key="index" @click="click(row)">
+					<td v-for="column in columns" :class=" { numeric : column.numeric } " :key="index">
 						<div v-if="!column.html"> {{ collect(row, column.field) }} </div>
 						<div v-if="column.html" v-html="collect(row, column.field)"></div>						
 					</td>
@@ -71,7 +74,7 @@
 				<label>
 					<span>{{lang['rows_per_page']}}:</span>
 					<select class="browser-default" @change="onTableLength">
-						<option v-for="option in perPageOptions" :value="option" :selected="option == currentPerPage">
+						<option v-for="option in perPageOptions" :value="option" :selected="option == currentPerPage" :key="index">
 						{{ option === -1 ? lang['all'] : option }}
 					  </option>
 					</select>

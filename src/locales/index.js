@@ -3,5 +3,7 @@ module.exports = {
 	ar: require('./ar.json'),
 	es: require('./es.json'),
 	br: require('./br.json'),
-	cat: require('./cat.json')
+	cat: require('./cat.json'),
+	fr: require('./fr.json'),
+	nl: require('./nl.json'),
 };
