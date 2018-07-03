@@ -133,6 +133,8 @@ You can use the property `locale` to set the display language. Available languag
 - `es` (Spanish)
 - `cat` (Catalan)
 - `br` (Brazilian Portuguese)
+- `nl` (Netherlands)
+- `fr` (French)
 
 > You can very easily contribute a locale. Just clone `locales/en.json` and `require` in `locales/index.js`
 
