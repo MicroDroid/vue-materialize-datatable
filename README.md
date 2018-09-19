@@ -120,6 +120,8 @@ customButtons  =>    Custom buttons thingy          =>   [                      
                                                                 hide: false,    // Whether to hide the button
                                                                 icon: 'search', // Materialize icon
                                                                 onclick: aFunc, // Click handler
+                                                                tooltip_txt:"Search", // Tooltip text (Optional)
+                                                                tooltip_position:"buttom", // Tooltip position (Optional)
                                                             }
                                                         ]
 ```
