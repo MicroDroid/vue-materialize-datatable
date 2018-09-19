@@ -8,27 +8,34 @@
 				   v-if="button.hide ? !button.hide : true"
 				   @click="button.onclick"
 				   :key="index"
+				   :tooltip="button.text_tooltip" 
+				   :tooltip-position="button.position_tooltip"
 				   >
 					<i class="material-icons">{{button.icon}}</i>
 				</a>
 				<a href="javascript:undefined"
 					class="waves-effect btn-flat nopadding"
 					v-if="this.printable"
-					@click="print">
+					@click="print"
+					:tooltip="lang['btn_print_tooltip']" 
+					tooltip-position="buttom">
 					<i class="material-icons">print</i>
 				</a>
 				<a href="javascript:undefined"
 					class="waves-effect btn-flat nopadding"
 					v-if="this.exportable"
 					@click="exportExcel"
-					v-tooltip="{ content: 'Exportar',placement: 'bottom' }"
+					:tooltip="lang['btn_export_tooltip']" 
+					tooltip-position="buttom"
 					>
 					<i class="material-icons">description</i>
 				</a>
 				<a href="javascript:undefined"
 					class="waves-effect btn-flat nopadding"
 					v-if="this.searchable"
-					@click="search">
+					@click="search"
+					:tooltip="lang['btn_search_tooltip']" 
+					tooltip-position="buttom">
 					<i class="material-icons">search</i>
 				</a>
 			</div>
@@ -62,6 +69,7 @@
 
 			<tbody>
 				<tr v-for="(row, index) in paginated" :class="{ clickable : clickable }" :key="index" @click="click(row)">
+					
 					<td v-for="column in columns" :class=" { numeric : column.numeric } " :key="index">
 						<div v-if="!column.html"> {{ collect(row, column.field) }} </div>
 						<div v-if="column.html" v-html="collect(row, column.field)"></div>						
@@ -115,6 +123,7 @@
 import Fuse from "fuse.js";
 import locales from "./locales";
 
+
 export default {
   props: {
     title: "",
@@ -124,6 +133,7 @@ export default {
     customButtons: { default: () => [] },
     perPage: { default: () => [10, 20, 30, 40, 50] },
     defaultPerPage: { default: null },
+    check: { default: false },
     sortable: { default: true },
     searchable: { default: true },
     exactSearch: {
@@ -377,6 +387,7 @@ export default {
 </script>
 
 <style scoped>
+
 div.material-table {
   padding: 0;
 }
@@ -416,6 +427,9 @@ table {
 .table-header .actions {
   display: -webkit-flex;
   margin-left: auto;
+  position:relative;
+  left:-28px;
+  top:10px;
 }
 
 .table-header .btn-flat {
@@ -628,98 +642,98 @@ table td:first-child {
 
 .rtl {
   direction: rtl;
+
 }
 
-.tooltip {
-  display: block !important;
-  z-index: 10000;
+
+/* CSS Tooltips */
+.waves-effect{
+	overflow:visible !important;
+}
+.btn-flat{
+	line-height: 20px !important;
+
+}
+[tooltip]{
+  position:relative;
+  display:inline-block;
+  left:-10px;
+}
+[tooltip]::before {
+    content: "";
+    position: absolute;
+    top:-6px;
+    left:50%;
+    transform: translateX(-50%);
+    border-width: 4px 6px 0 6px;
+    border-style: solid;
+    border-color: rgba(0,0,0,0.7) transparent transparent     transparent;
+    z-index: 99;
+    opacity:0;
 }
 
-.tooltip .tooltip-inner {
-  background: black;
-  color: white;
-  border-radius: 16px;
-  padding: 5px 10px 4px;
+[tooltip-position='left']::before{
+  left:0%;
+  top:50%;
+  margin-left:-12px;
+  transform:translatey(-50%) rotate(-90deg) 
+}
+[tooltip-position='top']::before{
+  left:50%;
+}
+[tooltip-position='buttom']::before{
+  top:100%;
+  margin-top:8px;
+  transform: translateX(-50%) translatey(-100%) rotate(-180deg)
+}
+[tooltip-position='right']::before{
+  left:100%;
+  top:50%;
+  margin-left:1px;
+  transform:translatey(-50%) rotate(90deg)
 }
 
-.tooltip .tooltip-arrow {
-  width: 0;
-  height: 0;
-  border-style: solid;
-  position: absolute;
-  margin: 5px;
-  border-color: black;
+[tooltip]::after {
+    content: attr(tooltip);
+    position: absolute;
+    left:50%;
+    top:-6px;
+    transform: translateX(-50%)   translateY(-100%);
+    background: rgba(0,0,0,0.7);
+    text-align: center;
+    color: #fff;
+    padding:4px 2px;
+    font-size: 12px;
+    min-width: 130px;
+    border-radius: 5px;
+    pointer-events: none;
+    padding: 4px 4px;
+    z-index:99;
+    opacity:0;
 }
 
-.tooltip[x-placement^="top"] {
-  margin-bottom: 5px;
+[tooltip-position='left']::after{
+  left:0%;
+  top:50%;
+  margin-left:-8px;
+  transform: translateX(-100%)   translateY(-50%);
+}
+[tooltip-position='top']::after{
+  left:50%;
+}
+[tooltip-position='buttom']::after{
+  top:100%;
+  margin-top:8px;
+  transform: translateX(-50%) translateY(0%);
+}
+[tooltip-position='right']::after{
+  left:100%;
+  top:50%;
+  margin-left:8px;
+  transform: translateX(0%)   translateY(-50%);
 }
 
-.tooltip[x-placement^="top"] .tooltip-arrow {
-  border-width: 5px 5px 0 5px;
-  border-left-color: transparent !important;
-  border-right-color: transparent !important;
-  border-bottom-color: transparent !important;
-  bottom: -5px;
-  left: calc(50% - 5px);
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.tooltip[x-placement^="bottom"] {
-  margin-top: 5px;
-}
-
-.tooltip[x-placement^="bottom"] .tooltip-arrow {
-  border-width: 0 5px 5px 5px;
-  border-left-color: transparent !important;
-  border-right-color: transparent !important;
-  border-top-color: transparent !important;
-  top: -5px;
-  left: calc(50% - 5px);
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.tooltip[x-placement^="right"] {
-  margin-left: 5px;
-}
-
-.tooltip[x-placement^="right"] .tooltip-arrow {
-  border-width: 5px 5px 5px 0;
-  border-left-color: transparent !important;
-  border-top-color: transparent !important;
-  border-bottom-color: transparent !important;
-  left: -5px;
-  top: calc(50% - 5px);
-  margin-left: 0;
-  margin-right: 0;
-}
-
-.tooltip[x-placement^="left"] {
-  margin-right: 5px;
-}
-
-.tooltip[x-placement^="left"] .tooltip-arrow {
-  border-width: 5px 0 5px 5px;
-  border-top-color: transparent !important;
-  border-right-color: transparent !important;
-  border-bottom-color: transparent !important;
-  right: -5px;
-  top: calc(50% - 5px);
-  margin-left: 0;
-  margin-right: 0;
-}
-
-.tooltip[aria-hidden="true"] {
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.15s, visibility 0.15s;
-}
-
-.tooltip[aria-hidden="false"] {
-  visibility: visible;
-  opacity: 1;
-  transition: opacity 0.15s;
+[tooltip]:hover::after,[tooltip]:hover::before {
+   opacity:1
 }
 </style>

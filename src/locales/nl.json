@@ -1,4 +1,7 @@
 {
+    "btn_print_tooltip": "Imprimir",
+	"btn_export_tooltip": "Exportar en xls",
+	"btn_search_tooltip": "Filtrar",
     "rows_per_page": "Rijen per pagina",
     "out_of_pages": "van",
     "all": "Alle",

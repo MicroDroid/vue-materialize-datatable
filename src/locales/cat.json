@@ -1,4 +1,7 @@
 {
+	"btn_print_tooltip": "Imprimir",
+	"btn_export_tooltip": "Exportar en xls",
+	"btn_search_tooltip": "Filtrar",
 	"rows_per_page": "Files per pàgina",
 	"out_of_pages": "de",
 	"all": "Totes",

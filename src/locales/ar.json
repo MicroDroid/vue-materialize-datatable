@@ -1,4 +1,7 @@
 {
+	"btn_print_tooltip": "طباعة",
+	"btn_export_tooltip": "تصدير في xls",
+	"btn_search_tooltip": "فلتر",
 	"rows_per_page": "عدد النتائج كل صفحة",
 	"out_of_pages": "من أصل",
 	"all": "الكل",
