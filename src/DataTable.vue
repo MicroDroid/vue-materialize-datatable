@@ -8,8 +8,8 @@
 				   v-if="button.hide ? !button.hide : true"
 				   @click="button.onclick"
 				   :key="index"
-				   :tooltip="button.text_tooltip" 
-				   :tooltip-position="button.position_tooltip"
+				   :tooltip="button.tooltip_txt" 
+				   :tooltip-position="button.tooltip_position"
 				   >
 					<i class="material-icons">{{button.icon}}</i>
 				</a>
