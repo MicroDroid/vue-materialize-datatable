@@ -20,7 +20,9 @@
 				<a href="javascript:undefined"
 					class="waves-effect btn-flat nopadding"
 					v-if="this.exportable"
-					@click="exportExcel">
+					@click="exportExcel"
+					v-tooltip="{ content: 'Exportar',placement: 'bottom' }"
+					>
 					<i class="material-icons">description</i>
 				</a>
 				<a href="javascript:undefined"
@@ -110,501 +112,614 @@
 </template>
 
 <script>
-	import Fuse from 'fuse.js';
-	import locales from './locales';
+import Fuse from "fuse.js";
+import locales from "./locales";
 
-	export default {
-		props: {
-			title: '',
-			columns: {},
-			rows: {},
-			clickable: {default: true},
-			customButtons: {default: () => []},
-			perPage: {default: () => [10, 20, 30, 40, 50]},
-			defaultPerPage: {default: null},
-			sortable: {default: true},
-			searchable: {default: true},
-			exactSearch: {
-				type: Boolean,
-				default: false
-			},
-			paginate: {default: true},
-			exportable: {default: true},
-			printable: {default: true},
-			locale: {default: 'en'},
-		},
+export default {
+  props: {
+    title: "",
+    columns: {},
+    rows: {},
+    clickable: { default: true },
+    customButtons: { default: () => [] },
+    perPage: { default: () => [10, 20, 30, 40, 50] },
+    defaultPerPage: { default: null },
+    sortable: { default: true },
+    searchable: { default: true },
+    exactSearch: {
+      type: Boolean,
+      default: false
+    },
+    paginate: { default: true },
+    exportable: { default: true },
+    printable: { default: true },
+    locale: { default: "en" }
+  },
 
-		data: () => ({
-			currentPage: 1,
-			currentPerPage: 10,
-			sortColumn: -1,
-			sortType: 'asc',
-			searching: false,
-			searchInput: '',
-		}),
+  data: () => ({
+    currentPage: 1,
+    currentPerPage: 10,
+    sortColumn: -1,
+    sortType: "asc",
+    searching: false,
+    searchInput: ""
+  }),
 
-		methods: {
-			nextPage: function() {
-				if (this.processedRows.length > this.currentPerPage * this.currentPage)
-					++this.currentPage;
-			},
+  methods: {
+    nextPage: function() {
+      if (this.processedRows.length > this.currentPerPage * this.currentPage)
+        ++this.currentPage;
+    },
 
-			previousPage: function() {
-				if (this.currentPage > 1)
-					--this.currentPage;
-			},
+    previousPage: function() {
+      if (this.currentPage > 1) --this.currentPage;
+    },
 
-			onTableLength: function(e) {
-				this.currentPerPage = parseInt(e.target.value);
-			},
+    onTableLength: function(e) {
+      this.currentPerPage = parseInt(e.target.value);
+    },
 
-			sort: function(index) {
-				if (!this.sortable)
-					return;
-				if (this.sortColumn === index) {
-					this.sortType = this.sortType === 'asc' ? 'desc' : 'asc';
-				} else {
-					this.sortType = 'asc';
-					this.sortColumn = index;
-				}
-			},
+    sort: function(index) {
+      if (!this.sortable) return;
+      if (this.sortColumn === index) {
+        this.sortType = this.sortType === "asc" ? "desc" : "asc";
+      } else {
+        this.sortType = "asc";
+        this.sortColumn = index;
+      }
+    },
 
-			search: function(e) {
-				this.searching = !this.searching;
-			},
+    search: function(e) {
+      this.searching = !this.searching;
+    },
 
-			click: function(row) {
-				if(!this.clickable){
-					return
-				}
+    click: function(row) {
+      if (!this.clickable) {
+        return;
+      }
 
-				if(getSelection().toString()){
-					// Return if some text is selected instead of firing the row-click event.
-					return
-				}
+      if (getSelection().toString()) {
+        // Return if some text is selected instead of firing the row-click event.
+        return;
+      }
 
-				this.$emit('row-click', row)
-			},
+      this.$emit("row-click", row);
+    },
 
-			exportExcel: function() {
-				const mimeType = 'data:application/vnd.ms-excel';
-				const html = this.renderTable().replace(/ /g, '%20');
+    exportExcel: function() {
+      const mimeType = "data:application/vnd.ms-excel";
+      const html = this.renderTable().replace(/ /g, "%20");
 
-				const documentPrefix = this.title != '' ? this.title.replace(/ /g, '-') : 'Sheet'
-				const d = new Date();
+      const documentPrefix =
+        this.title != "" ? this.title.replace(/ /g, "-") : "Sheet";
+      const d = new Date();
 
-				var dummy = document.createElement('a');
-				dummy.href = mimeType + ', ' + html;
-				dummy.download = documentPrefix
-					+ '-' + d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate()
-					+ '-' + d.getHours() + '-' + d.getMinutes() + '-' + d.getSeconds()
-					+'.xls';
-				document.body.appendChild(dummy);
-				dummy.click();
-			},
+      var dummy = document.createElement("a");
+      dummy.href = mimeType + ", " + html;
+      dummy.download =
+        documentPrefix +
+        "-" +
+        d.getFullYear() +
+        "-" +
+        (d.getMonth() + 1) +
+        "-" +
+        d.getDate() +
+        "-" +
+        d.getHours() +
+        "-" +
+        d.getMinutes() +
+        "-" +
+        d.getSeconds() +
+        ".xls";
+      document.body.appendChild(dummy);
+      dummy.click();
+    },
 
-			print: function() {
-				let win = window.open("");
-				win.document.write(this.renderTable());
-				win.print();
-				win.close();
-			},
+    print: function() {
+      let win = window.open("");
+      win.document.write(this.renderTable());
+      win.print();
+      win.close();
+    },
 
-			renderTable: function() {
-				var table = '<table><thead>';
+    renderTable: function() {
+      var table = "<table><thead>";
 
-				table += '<tr>';
-				for (var i = 0; i < this.columns.length; i++) {
-					const column = this.columns[i];
-					table += '<th>';
-					table += 	column.label;
-					table += '</th>';
-				}
-				table += '</tr>';
+      table += "<tr>";
+      for (var i = 0; i < this.columns.length; i++) {
+        const column = this.columns[i];
+        table += "<th>";
+        table += column.label;
+        table += "</th>";
+      }
+      table += "</tr>";
 
-				table += '</thead><tbody>';
+      table += "</thead><tbody>";
 
-				for (var i = 0; i < this.rows.length; i++) {
-					const row = this.rows[i];
-					table += '<tr>';
-					for (var j = 0; j < this.columns.length; j++) {
-						const column = this.columns[j];
-						table += '<td>';
-						table +=	this.collect(row, column.field);
-						table += '</td>';
-					}
-					table += '</tr>';
-				}
+      for (var i = 0; i < this.rows.length; i++) {
+        const row = this.rows[i];
+        table += "<tr>";
+        for (var j = 0; j < this.columns.length; j++) {
+          const column = this.columns[j];
+          table += "<td>";
+          table += this.collect(row, column.field);
+          table += "</td>";
+        }
+        table += "</tr>";
+      }
 
-				table += '</tbody></table>';
+      table += "</tbody></table>";
 
-				return table;
-			},
+      return table;
+    },
 
-			dig: function(obj, selector) {
-				var result = obj;
-				const splitter = selector.split('.');
+    dig: function(obj, selector) {
+      var result = obj;
+      const splitter = selector.split(".");
 
-				for (let i = 0; i < splitter.length; i++){
-					if (result == undefined)
-						return undefined;
-						
-					result = result[splitter[i]];
-				}
+      for (let i = 0; i < splitter.length; i++) {
+        if (result == undefined) return undefined;
 
-				return result;
-			},
+        result = result[splitter[i]];
+      }
 
-			collect: function(obj, field) {
-				if (typeof(field) === 'function')
-					return field(obj);
-				else if (typeof(field) === 'string')
-					return this.dig(obj, field);
-				else
-					return undefined;
-			}
-		},
+      return result;
+    },
 
-		computed: {
-			perPageOptions: function() {
-				var options = (Array.isArray(this.perPage) && this.perPage) || [10, 20, 30, 40, 50];
+    collect: function(obj, field) {
+      if (typeof field === "function") return field(obj);
+      else if (typeof field === "string") return this.dig(obj, field);
+      else return undefined;
+    }
+  },
 
-				// Force numbers
-				options = options.map( v => parseInt(v));
+  computed: {
+    perPageOptions: function() {
+      var options = (Array.isArray(this.perPage) && this.perPage) || [
+        10,
+        20,
+        30,
+        40,
+        50
+      ];
 
-				// Set current page to first value
-				this.currentPerPage = options[0];
+      // Force numbers
+      options = options.map(v => parseInt(v));
 
-				// Sort options
-				options.sort((a,b) => a - b);
+      // Set current page to first value
+      this.currentPerPage = options[0];
 
-				// And add "All"
-				options.push(-1);
+      // Sort options
+      options.sort((a, b) => a - b);
 
-				// If defaultPerPage is provided and it's a valid option, set as current per page
-				if (options.indexOf(this.defaultPerPage) > -1) {
-					this.currentPerPage = parseInt(this.defaultPerPage);
-				}
+      // And add "All"
+      options.push(-1);
 
-				return options;
-			},
-			processedRows: function() {
-				var computedRows = this.rows;
+      // If defaultPerPage is provided and it's a valid option, set as current per page
+      if (options.indexOf(this.defaultPerPage) > -1) {
+        this.currentPerPage = parseInt(this.defaultPerPage);
+      }
 
-				if (this.sortable !== false)
-					computedRows = computedRows.sort((x,y) => {
-						if (!this.columns[this.sortColumn])
-							return 0;
+      return options;
+    },
+    processedRows: function() {
+      var computedRows = this.rows;
 
-						const cook = (x) => {
-							x = this.collect(x, this.columns[this.sortColumn].field);
-							if (typeof(x) === 'string') {
-								x = x.toLowerCase();
-							 	if (this.columns[this.sortColumn].numeric)
-									x = x.indexOf('.') >= 0 ? parseFloat(x) : parseInt(x);
-							}
-							return x;
-						}
+      if (this.sortable !== false)
+        computedRows = computedRows.sort((x, y) => {
+          if (!this.columns[this.sortColumn]) return 0;
 
-						x = cook(x);
-						y = cook(y);
+          const cook = x => {
+            x = this.collect(x, this.columns[this.sortColumn].field);
+            if (typeof x === "string") {
+              x = x.toLowerCase();
+              if (this.columns[this.sortColumn].numeric)
+                x = x.indexOf(".") >= 0 ? parseFloat(x) : parseInt(x);
+            }
+            return x;
+          };
 
-						return (x < y ? -1 : (x > y ? 1 : 0)) * (this.sortType === 'desc' ? -1 : 1);
-					})
+          x = cook(x);
+          y = cook(y);
 
-				if (this.searching && this.searchInput) {
-					const searchConfig = { keys: this.columns.map(c => c.field) }
+          return (
+            (x < y ? -1 : x > y ? 1 : 0) * (this.sortType === "desc" ? -1 : 1)
+          );
+        });
 
-					// Enable searching of numbers (non-string)
-					// Temporary fix of https://github.com/krisk/Fuse/issues/144
-					searchConfig.getFn = (obj, path) => {
-						const property = this.dig(obj, path);
-						if(Number.isInteger(property))
-							return JSON.stringify(property);
-						return property;
-					}
+      if (this.searching && this.searchInput) {
+        const searchConfig = { keys: this.columns.map(c => c.field) };
 
-					if(this.exactSearch){
-						//return only exact matches
-						searchConfig.threshold = 0,
-						searchConfig.distance = 0
-					}
+        // Enable searching of numbers (non-string)
+        // Temporary fix of https://github.com/krisk/Fuse/issues/144
+        searchConfig.getFn = (obj, path) => {
+          const property = this.dig(obj, path);
+          if (Number.isInteger(property)) return JSON.stringify(property);
+          return property;
+        };
 
-					computedRows = (new Fuse(computedRows, searchConfig)).search(this.searchInput);
-				}
+        if (this.exactSearch) {
+          //return only exact matches
+          (searchConfig.threshold = 0), (searchConfig.distance = 0);
+        }
 
-				return computedRows;
-			},
+        computedRows = new Fuse(computedRows, searchConfig).search(
+          this.searchInput
+        );
+      }
 
-			paginated: function() {
-				var paginatedRows = this.processedRows;
-				if (this.paginate)
-					paginatedRows = paginatedRows.slice((this.currentPage - 1) * this.currentPerPage, this.currentPerPage === -1 ? paginatedRows.length + 1 : this.currentPage * this.currentPerPage);
-				return paginatedRows;
-			},
+      return computedRows;
+    },
 
-			lang: function() {
-				return this.locale in locales ? locales[this.locale] : locales['en'];
-			}
-		},
+    paginated: function() {
+      var paginatedRows = this.processedRows;
+      if (this.paginate)
+        paginatedRows = paginatedRows.slice(
+          (this.currentPage - 1) * this.currentPerPage,
+          this.currentPerPage === -1
+            ? paginatedRows.length + 1
+            : this.currentPage * this.currentPerPage
+        );
+      return paginatedRows;
+    },
 
-		mounted: function() {
-			if (!(this.locale in locales))
-				console.error(`vue-materialize-datable: Invalid locale '${this.locale}'`);
-			this.currentPerPage = this.currentPerPage
-		}
-	}
+    lang: function() {
+      return this.locale in locales ? locales[this.locale] : locales["en"];
+    }
+  },
+
+  mounted: function() {
+    if (!(this.locale in locales))
+      console.error(`vue-materialize-datable: Invalid locale '${this.locale}'`);
+    this.currentPerPage = this.currentPerPage;
+  }
+};
 </script>
 
 <style scoped>
-	div.material-table {
-		padding: 0;
-	}
+div.material-table {
+  padding: 0;
+}
 
-	tr.clickable {
-		cursor: pointer;
-	}
+tr.clickable {
+  cursor: pointer;
+}
 
-	#search-input {
-		margin: 0;
-		border: transparent 0 !important;
-		height: 48px;
-		color: rgba(0, 0, 0, .84);
-	}
+#search-input {
+  margin: 0;
+  border: transparent 0 !important;
+  height: 48px;
+  color: rgba(0, 0, 0, 0.84);
+}
 
-	#search-input-container {
-		padding: 0 14px 0 24px;
-		border-bottom: solid 1px #DDDDDD;
-	}
+#search-input-container {
+  padding: 0 14px 0 24px;
+  border-bottom: solid 1px #dddddd;
+}
 
-	table {
-		table-layout: fixed;
-	}
+table {
+  table-layout: fixed;
+}
 
-	.table-header {
-		height: 64px;
-		padding-left: 24px;
-		padding-right: 14px;
-		-webkit-align-items: center;
-		-ms-flex-align: center;
-		align-items: center;
-		display: flex;
-		-webkit-display: flex;
-		border-bottom: solid 1px #DDDDDD;
-	}
+.table-header {
+  height: 64px;
+  padding-left: 24px;
+  padding-right: 14px;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: flex;
+  -webkit-display: flex;
+  border-bottom: solid 1px #dddddd;
+}
 
-	.table-header .actions {
-		display: -webkit-flex;
-		margin-left: auto;
-	}
+.table-header .actions {
+  display: -webkit-flex;
+  margin-left: auto;
+}
 
-	.table-header .btn-flat {
-			min-width: 36px;
-			padding: 0 8px;
-	}
+.table-header .btn-flat {
+  min-width: 36px;
+  padding: 0 8px;
+}
 
-	.table-header input {
-		margin: 0;
-		height: auto;
-	}
+.table-header input {
+  margin: 0;
+  height: auto;
+}
 
-	.table-header i {
-		color: rgba(0, 0, 0, 0.54);
-		font-size: 24px;
-	}
+.table-header i {
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 24px;
+}
 
-	.table-footer {
-		height: 56px;
-		padding-left: 24px;
-		padding-right: 14px;
-		display: -webkit-flex;
-		display: flex;
-		-webkit-flex-direction: row;
-		flex-direction: row;
-		-webkit-justify-content: flex-end;
-		justify-content: flex-end;
-		-webkit-align-items: center;
-		align-items: center;
-		font-size: 12px !important;
-		color: rgba(0, 0, 0, 0.54);
-	}
+.table-footer {
+  height: 56px;
+  padding-left: 24px;
+  padding-right: 14px;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-justify-content: flex-end;
+  justify-content: flex-end;
+  -webkit-align-items: center;
+  align-items: center;
+  font-size: 12px !important;
+  color: rgba(0, 0, 0, 0.54);
+}
 
-	.table-footer .datatable-length {
-		display: -webkit-flex;
-		display: flex;
-	}
+.table-footer .datatable-length {
+  display: -webkit-flex;
+  display: flex;
+}
 
-	.table-footer .datatable-length select {
-		outline: none;
-	}
+.table-footer .datatable-length select {
+  outline: none;
+}
 
-	.table-footer label {
-		font-size: 12px;
-		color: rgba(0, 0, 0, 0.54);
-		display: -webkit-flex;
-		display: flex;
-		-webkit-flex-direction: row;
-		/* works with row or column */
-		
-		flex-direction: row;
-		-webkit-align-items: center;
-		align-items: center;
-		-webkit-justify-content: center;
-		justify-content: center;
-	}
+.table-footer label {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.54);
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  /* works with row or column */
 
-	.table-footer .select-wrapper {
-		display: -webkit-flex;
-		display: flex;
-		-webkit-flex-direction: row;
-		/* works with row or column */
-		
-		flex-direction: row;
-		-webkit-align-items: center;
-		align-items: center;
-		-webkit-justify-content: center;
-		justify-content: center;
-	}
+  flex-direction: row;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
 
-	.table-footer .datatable-info,
-	.table-footer .datatable-length {
-		margin-right: 32px;
-	}
+.table-footer .select-wrapper {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  /* works with row or column */
 
-	.table-footer .material-pagination {
-		display: flex;
-		-webkit-display: flex;
-		margin: 0;
-	}
+  flex-direction: row;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
 
-	.table-footer .material-pagination li a {
-		color: rgba(0, 0, 0, 0.54);
-		padding: 0 8px;
-		font-size: 24px;
-	}
+.table-footer .datatable-info,
+.table-footer .datatable-length {
+  margin-right: 32px;
+}
 
-	.table-footer .select-wrapper input.select-dropdown {
-		margin: 0;
-		border-bottom: none;
-		height: auto;
-		line-height: normal;
-		font-size: 12px;
-		width: 40px;
-		text-align: right;
-	}
+.table-footer .material-pagination {
+  display: flex;
+  -webkit-display: flex;
+  margin: 0;
+}
 
-	.table-footer select {
-		background-color: transparent;
-		width: auto;
-		padding: 0;
-		border: 0;
-		border-radius: 0;
-		height: auto;
-		margin-left: 20px;
-	}
+.table-footer .material-pagination li a {
+  color: rgba(0, 0, 0, 0.54);
+  padding: 0 8px;
+  font-size: 24px;
+}
 
-	.table-title {
-		font-size: 20px;
-		color: #000;
-	}
+.table-footer .select-wrapper input.select-dropdown {
+  margin: 0;
+  border-bottom: none;
+  height: auto;
+  line-height: normal;
+  font-size: 12px;
+  width: 40px;
+  text-align: right;
+}
 
-	table tr td {
-		padding: 0 0 0 56px;
-		height: 48px;
-		font-size: 13px;
-		color: rgba(0, 0, 0, 0.87);
-		border-bottom: solid 1px #DDDDDD;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
+.table-footer select {
+  background-color: transparent;
+  width: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  height: auto;
+  margin-left: 20px;
+}
 
-	table td, table th {
-		border-radius: 0;
-	}
+.table-title {
+  font-size: 20px;
+  color: #000;
+}
 
-	table tr td a {
-		color: inherit;
-	}
+table tr td {
+  padding: 0 0 0 56px;
+  height: 48px;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.87);
+  border-bottom: solid 1px #dddddd;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-	table tr td a i {
-		font-size: 18px;
-		color: rgba(0, 0, 0, 0.54);
-	}
+table td,
+table th {
+  border-radius: 0;
+}
 
-	table tr {
-		font-size: 12px;
-	}
+table tr td a {
+  color: inherit;
+}
 
-	table th {
-		font-size: 12px;
-		font-weight: 500;
-		color: #757575;
-		cursor: pointer;
-		white-space: nowrap;
-		padding: 0;
-		height: 56px;
-		padding-left: 56px;
-		vertical-align: middle;
-		outline: none !important;
+table tr td a i {
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.54);
+}
 
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
+table tr {
+  font-size: 12px;
+}
 
-	table th:hover {
-		overflow: visible;
-		text-overflow: initial;
-	}
+table th {
+  font-size: 12px;
+  font-weight: 500;
+  color: #757575;
+  cursor: pointer;
+  white-space: nowrap;
+  padding: 0;
+  height: 56px;
+  padding-left: 56px;
+  vertical-align: middle;
+  outline: none !important;
 
-	table th.sorting-asc,
-	table th.sorting-desc {
-		color: rgba(0, 0, 0, 0.87);
-	}
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-	table th.sorting:after,
-	table th.sorting-asc:after  {
-		font-family: 'Material Icons';
-		font-weight: normal;
-		font-style: normal;
-		font-size: 16px;
-		line-height: 1;
-		letter-spacing: normal;
-		text-transform: none;
-		display: inline-block;
-		word-wrap: normal;
-		-webkit-font-feature-settings: 'liga';
-		-webkit-font-smoothing: antialiased;
-		content: "arrow_back";
-		-webkit-transform: rotate(90deg);
-		display: none;
-		vertical-align: middle;
-	}
+table th:hover {
+  overflow: visible;
+  text-overflow: initial;
+}
 
-	table th.sorting:hover:after,
-	table th.sorting-asc:after,
-	table th.sorting-desc:after {
-		display: inline-block;
-	}
+table th.sorting-asc,
+table th.sorting-desc {
+  color: rgba(0, 0, 0, 0.87);
+}
 
-	table th.sorting-desc:after {
-		content: "arrow_forward";
-	}
+table th.sorting:after,
+table th.sorting-asc:after {
+  font-family: "Material Icons";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  word-wrap: normal;
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+  content: "arrow_back";
+  -webkit-transform: rotate(90deg);
+  display: none;
+  vertical-align: middle;
+}
 
-	table tbody tr:hover {
-		background-color: #EEE;
-	}
-	
-	table th:last-child,
-	table td:last-child {
-		padding-right: 14px;
-	}
+table th.sorting:hover:after,
+table th.sorting-asc:after,
+table th.sorting-desc:after {
+  display: inline-block;
+}
 
-	table th:first-child, table td:first-child {
-		padding-left: 24px;
-	}
+table th.sorting-desc:after {
+  content: "arrow_forward";
+}
 
-	.rtl {
-		direction: rtl;
-	}
+table tbody tr:hover {
+  background-color: #eee;
+}
+
+table th:last-child,
+table td:last-child {
+  padding-right: 14px;
+}
+
+table th:first-child,
+table td:first-child {
+  padding-left: 24px;
+}
+
+.rtl {
+  direction: rtl;
+}
+
+.tooltip {
+  display: block !important;
+  z-index: 10000;
+}
+
+.tooltip .tooltip-inner {
+  background: black;
+  color: white;
+  border-radius: 16px;
+  padding: 5px 10px 4px;
+}
+
+.tooltip .tooltip-arrow {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  position: absolute;
+  margin: 5px;
+  border-color: black;
+}
+
+.tooltip[x-placement^="top"] {
+  margin-bottom: 5px;
+}
+
+.tooltip[x-placement^="top"] .tooltip-arrow {
+  border-width: 5px 5px 0 5px;
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
+  border-bottom-color: transparent !important;
+  bottom: -5px;
+  left: calc(50% - 5px);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.tooltip[x-placement^="bottom"] {
+  margin-top: 5px;
+}
+
+.tooltip[x-placement^="bottom"] .tooltip-arrow {
+  border-width: 0 5px 5px 5px;
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
+  border-top-color: transparent !important;
+  top: -5px;
+  left: calc(50% - 5px);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.tooltip[x-placement^="right"] {
+  margin-left: 5px;
+}
+
+.tooltip[x-placement^="right"] .tooltip-arrow {
+  border-width: 5px 5px 5px 0;
+  border-left-color: transparent !important;
+  border-top-color: transparent !important;
+  border-bottom-color: transparent !important;
+  left: -5px;
+  top: calc(50% - 5px);
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.tooltip[x-placement^="left"] {
+  margin-right: 5px;
+}
+
+.tooltip[x-placement^="left"] .tooltip-arrow {
+  border-width: 5px 0 5px 5px;
+  border-top-color: transparent !important;
+  border-right-color: transparent !important;
+  border-bottom-color: transparent !important;
+  right: -5px;
+  top: calc(50% - 5px);
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.tooltip[aria-hidden="true"] {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.15s, visibility 0.15s;
+}
+
+.tooltip[aria-hidden="false"] {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.15s;
+}
 </style>
