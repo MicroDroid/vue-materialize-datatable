@@ -12,6 +12,7 @@
  - Pagination
  - Localization
  - Fuzzy searching
+ - Server searching
  - Excel export
  - Printing
  - Custom topbar buttons
@@ -112,6 +113,8 @@ clickable      =>    Rows are clickable.            =>   true (default)         
 sortable       =>    Cause column-click to sort     =>   true (default)          // Whether sortable
 searchable     =>    Add fuzzy search functionality =>   true (default)          // Whether searchable
 exactSearch    =>    Disable fuzzy search           =>   true (default)          // Whether only exact matches are returned
+serverSearch    =>   Server search is used to fetch data from server           =>   false (default)          // If you wanna do server search then searchable and serverSearch must be true and use serverSearchFunc as callback.
+serverSearchFunc    =>    Function for search search           =>   function      // For this searchSearch criteria is must.
 paginate       =>    Add footer next/prev. btns     =>   true (default)          // Whether paginated
 exportable     =>    Add button to export to Excel  =>   true (default)          // Whether exportable
 printable      =>    Add printing functionality     =>   true (default)          // Whether printable

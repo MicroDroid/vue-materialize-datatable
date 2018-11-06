@@ -128,10 +128,17 @@
 				type: Boolean,
 				default: false
 			},
+			serverSearch: {
+				type: Boolean,
+				default: false
+			},
+			serverSearchFunc: {
+				type: Function
+			},
 			paginate: {default: true},
 			exportable: {default: true},
 			printable: {default: true},
-			locale: {default: 'en'},
+			locale: {default: 'en'}
 		},
 
 		data: () => ({
@@ -313,6 +320,12 @@
 					})
 
 				if (this.searching && this.searchInput) {
+
+					if(this.serverSearch) {
+						this.serverSearchFunc(this.searchInput)
+						return
+					}
+
 					const searchConfig = { keys: this.columns.map(c => c.field) }
 
 					// Enable searching of numbers (non-string)
