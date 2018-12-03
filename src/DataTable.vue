@@ -62,7 +62,7 @@
 				<tr v-for="(row, index) in paginated" :class="{ clickable : clickable }" :key="index" @click="click(row)">
 					<td v-for="column in columns" :class=" { numeric : column.numeric } " :key="index">
 						<div v-if="!column.html"> {{ collect(row, column.field) }} </div>
-						<div v-if="column.html" v-html="collect(row, column.field)"></div>						
+						<div v-if="column.html" v-html="collect(row, column.field)"></div>
 					</td>
 					<slot name="tbody-tr" :row="row"></slot>
 				</tr>
@@ -255,7 +255,7 @@
 				for (let i = 0; i < splitter.length; i++){
 					if (result == undefined)
 						return undefined;
-						
+
 					result = result[splitter[i]];
 				}
 
@@ -458,7 +458,7 @@
 		display: flex;
 		-webkit-flex-direction: row;
 		/* works with row or column */
-		
+
 		flex-direction: row;
 		-webkit-align-items: center;
 		align-items: center;
@@ -471,7 +471,7 @@
 		display: flex;
 		-webkit-flex-direction: row;
 		/* works with row or column */
-		
+
 		flex-direction: row;
 		-webkit-align-items: center;
 		align-items: center;
@@ -607,7 +607,7 @@
 	table tbody tr:hover {
 		background-color: #EEE;
 	}
-	
+
 	table th:last-child,
 	table td:last-child {
 		padding-right: 14px;
