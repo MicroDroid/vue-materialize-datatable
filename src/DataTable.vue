@@ -60,9 +60,9 @@
 
 			<tbody>
 				<tr v-for="(row, index) in paginated" :class="{ clickable : clickable }" :key="index" @click="click(row)">
-					<td v-for="column in columns" :class=" { numeric : column.numeric } " :key="index">
+					<td v-for="(column, columnIndex) in columns" :class=" { numeric : column.numeric } " :key="columnIndex">
 						<div v-if="!column.html"> {{ collect(row, column.field) }} </div>
-						<div v-if="column.html" v-html="collect(row, column.field)"></div>						
+						<div v-if="column.html" v-html="collect(row, column.field)"></div>
 					</td>
 					<slot name="tbody-tr" :row="row"></slot>
 				</tr>
@@ -74,7 +74,7 @@
 				<label>
 					<span>{{lang['rows_per_page']}}:</span>
 					<select class="browser-default" @change="onTableLength">
-						<option v-for="option in perPageOptions" :value="option" :selected="option == currentPerPage" :key="index">
+						<option v-for="(option, index) in perPageOptions" :value="option" :selected="option == currentPerPage" :key="index">
 						{{ option === -1 ? lang['all'] : option }}
 					  </option>
 					</select>
@@ -255,7 +255,7 @@
 				for (let i = 0; i < splitter.length; i++){
 					if (result == undefined)
 						return undefined;
-						
+
 					result = result[splitter[i]];
 				}
 
@@ -458,7 +458,7 @@
 		display: flex;
 		-webkit-flex-direction: row;
 		/* works with row or column */
-		
+
 		flex-direction: row;
 		-webkit-align-items: center;
 		align-items: center;
@@ -471,7 +471,7 @@
 		display: flex;
 		-webkit-flex-direction: row;
 		/* works with row or column */
-		
+
 		flex-direction: row;
 		-webkit-align-items: center;
 		align-items: center;
@@ -607,7 +607,7 @@
 	table tbody tr:hover {
 		background-color: #EEE;
 	}
-	
+
 	table th:last-child,
 	table td:last-child {
 		padding-right: 14px;
