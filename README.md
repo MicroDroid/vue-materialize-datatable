@@ -172,6 +172,171 @@ Of course, code above will render garbage. Here are the props it accepts to rend
       </pre>
     </td>
   </tr>
+  <tr>
+    <td>
+      <code>defaultPerPage</code>
+    </td>
+    <td>
+      Default rows per page
+    </td>
+    <td>
+      <pre>
+10 (default) // Default results per page, otherwise it will be the first value of perPage
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>onClick</code>
+    </td>
+    <td>
+      Function to execute on click
+    </td>
+    <td>
+      <pre>
+console.log('hey') // Function, row 1st param
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>clickable</code>
+    </td>
+    <td>
+      Clickable rows. Will fire row-click event
+    </td>
+    <td>
+      <pre>
+true (default) // Row is passed in the event payload
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>sortable</code>
+    </td>
+    <td>
+      Cause column-click to sort
+    </td>
+    <td>
+      <pre>
+true (default) // Whether sortable
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>searchable</code>
+    </td>
+    <td>
+      Add fuzzy search functionality
+    </td>
+    <td>
+      <pre>
+true (default) // Whether searchable
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>exactSearch</code>
+    </td>
+    <td>
+      Disable fuzzy search
+    </td>
+    <td>
+      <pre>
+true (default) // Whether only exact matches are returned
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>serverSearch</code>
+    </td>
+    <td>
+      Server search is used to fetch data from server
+    </td>
+    <td>
+      <pre>
+false (default) // If you wanna do server search then searchable and serverSearch must be true and use serverSearchFunc as callback.
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>serverSearchFunc</code>
+    </td>
+    <td>
+      Function for search search
+    </td>
+    <td>
+      <pre>
+function // For this searchSearch criteria is must.
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>paginate</code>
+    </td>
+    <td>
+      Add footer next/prev. buttons
+    </td>
+    <td>
+      <pre>
+true (default) // Whether paginated
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>exportable</code>
+    </td>
+    <td>
+      Add button to export to Excel
+    </td>
+    <td>
+      <pre>
+true (default) // Whether exportable
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>printable</code>
+    </td>
+    <td>
+      Add printing functionality	
+    </td>
+    <td>
+      <pre>
+true (default) // Whether printable
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>customButtons</code>
+    </td>
+    <td>
+      Custom buttons thingy
+    </td>
+    <td>
+      <pre>
+        <code>
+// Array of objects
+[
+  { 
+    hide: false, // Whether to hide the button
+    icon: "search", // Materialize icon 
+    onclick: aFunc() // Click handler 
+  } 
+];
+        </code>
+      </pre>
+    </td>
+  </tr>
 </table>
 
 | Prop name          | Description                                     | Example                                                                                                                                                                                                                                                 |
