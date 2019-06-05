@@ -108,9 +108,7 @@ Of course, code above will render garbage. Here are the props it accepts to rend
     </td>
     <td>
       <pre>
-        <code>
-"Todos" // Name in top
-        </code>  
+"Todos" // Name in top 
       </pre>
     </td>
   </tr>
