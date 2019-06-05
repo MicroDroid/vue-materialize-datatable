@@ -104,7 +104,22 @@ Of course, code above will render garbage. Here are the props it accepts to rend
       <code>title</code>
     </td>
     <td>
-      <code>The title of the datatable</code>
+      The title of the datatable
+    </td>
+    <td>
+      <pre>
+        <code>
+"Todos" // Name in top
+        </code>  
+      </pre>
+    </td>
+  </tr>
+    <tr>
+    <td>
+      <code>columns</code>
+    </td>
+    <td>
+      Columns
     </td>
     <td>
       <pre>
