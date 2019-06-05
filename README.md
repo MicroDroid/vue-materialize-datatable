@@ -181,7 +181,8 @@ Of course, code above will render garbage. Here are the props it accepts to rend
     </td>
     <td>
       <pre>
-10 (default) // Default results per page, otherwise it will be the first value of perPage
+10 (default) // Default results per page, otherwise it will be the
+first value of perPage
       </pre>
     </td>
   </tr>
@@ -259,7 +260,8 @@ true (default) // Whether only exact matches are returned
     </td>
     <td>
       <pre>
-false (default) // If you wanna do server search then searchable and serverSearch must be true and use serverSearchFunc as callback.
+false (default) // If you wanna do server search then searchable and
+serverSearch must be true and use serverSearchFunc as callback.
       </pre>
     </td>
   </tr>
