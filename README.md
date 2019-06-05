@@ -101,7 +101,7 @@ Of course, code above will render garbage. Here are the props it accepts to rend
   </tr>
   <tr>
     <td>
-      `title`
+      <code>title</code>
     </td>
     <td>
       The title of the datatable
