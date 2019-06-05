@@ -108,9 +108,16 @@ Of course, code above will render garbage. Here are the props it accepts to rend
     </td>
     <td>
       <pre>
-        [ // Array of objects 
-          {    
-            label: "Name", // Column name     field: "name", // Field name from row     // Use dot for nested props     // Can be function with row as 1st param     numeric: false, // Affects sorting     html: false // Escapes output if false.   } ];
+[ // Array of objects 
+  {    
+    label: "Name", // Column name
+    field: "name", // Field name from row
+                   // Use dot for nested props
+                   // Can be function with row as 1st param
+    numeric: false,// Affects sorting
+    html: false    // Escapes output if false.
+  } 
+];
       </pre>
     </td>
   </tr>
