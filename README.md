@@ -87,6 +87,35 @@ And then.. use the component:
 
 Of course, code above will render garbage. Here are the props it accepts to render some sensible data:
 
+<table>
+  <tr>
+    <th>
+      Prop name
+    </th>
+    <th>
+      Description
+    </th>
+    <th>
+      Example
+    </th>
+  </tr>
+  <tr>
+    <td>
+      `title`
+    </td>
+    <td>
+      The title of the datatable
+    </td>
+    <td>
+      <pre>
+        [ // Array of objects 
+          {    
+            label: "Name", // Column name     field: "name", // Field name from row     // Use dot for nested props     // Can be function with row as 1st param     numeric: false, // Affects sorting     html: false // Escapes output if false.   } ];
+      </pre>
+    </td>
+  </tr>
+</table>
+
 | Prop name          | Description                                     | Example                                                                                                                                                                                                                                                                              |
 |--------------------|-------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `title`            | The title of the datatable                      | `"Todos" // Name in top`                                                                                                                                                                                                                                                             |
