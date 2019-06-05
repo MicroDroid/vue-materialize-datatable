@@ -108,6 +108,7 @@ Of course, code above will render garbage. Here are the props it accepts to rend
     </td>
     <td>
       <pre>
+        <code>
 [ // Array of objects 
   {    
     label: "Name", // Column name
@@ -118,6 +119,7 @@ Of course, code above will render garbage. Here are the props it accepts to rend
     html: false    // Escapes output if false.
   } 
 ];
+        </code>
       </pre>
     </td>
   </tr>
