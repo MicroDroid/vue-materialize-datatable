@@ -6,6 +6,8 @@
 
 > Library is kind of unstable. Bugs, missing features might be present
 
+## Demo
+https://justice47.github.io/vue-materialize-datatable-demo-vue/
 
 ## Features
  - Sorting, with numerical sorting
@@ -85,47 +87,24 @@ And then.. use the component:
 
 Of course, code above will render garbage. Here are the props it accepts to render some sensible data:
 
-```
-Prop name      =>    Description                    =>   Example
-
-title          =>    The title of the datatable     =>   "Todos"                 // Name in top
-columns        =>    Columns.                       =>   [                       // Array of objects
-                                                            {
-                                                                label: 'Name',  // Column name
-                                                                field: 'name',  // Field name from row
-                                                                                // Use dot for nested props
-                                                                                // Can be function with row as 1st param
-                                                                numeric: false, // Affects sorting
-                                                                html: false,    // Escapes output if false.
-                                                            }
-                                                        ]
-rows           =>    Rows.                          =>   [                       // Array of objects
-                                                            {
-                                                                name: "test",   // Whatever.
-                                                                ...
-                                                            }
-                                                        ]
-perPage        =>    Numbers of rows per page       =>   [10, 20, 30, 40, 50] (default) // Results per page
-defaultPerPage =>    Default rows per page          =>   10 (default)            // Default results per page, otherwise it will be the first value of perPage
-onClick        =>    Func. to execute on click      =>   console.log             // Function, row 1st param
-clickable      =>    Rows are clickable.            =>   true (default)          // Row is passed in the event payload
-                    Will fire `row-click` event                                  // See react to click on row (below)
-sortable       =>    Cause column-click to sort     =>   true (default)          // Whether sortable
-searchable     =>    Add fuzzy search functionality =>   true (default)          // Whether searchable
-exactSearch    =>    Disable fuzzy search           =>   true (default)          // Whether only exact matches are returned
-serverSearch    =>   Server search is used to fetch data from server           =>   false (default)          // If you wanna do server search then searchable and serverSearch must be true and use serverSearchFunc as callback.
-serverSearchFunc    =>    Function for search search           =>   function      // For this searchSearch criteria is must.
-paginate       =>    Add footer next/prev. btns     =>   true (default)          // Whether paginated
-exportable     =>    Add button to export to Excel  =>   true (default)          // Whether exportable
-printable      =>    Add printing functionality     =>   true (default)          // Whether printable
-customButtons  =>    Custom buttons thingy          =>   [                       // Array of objects
-                                                            {
-                                                                hide: false,    // Whether to hide the button
-                                                                icon: 'search', // Materialize icon
-                                                                onclick: aFunc, // Click handler
-                                                            }
-                                                        ]
-```
+| Prop name          | Description                                     | Example                                                                                                                                                                                                                                                                              |
+|--------------------|-------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `title`            | The title of the datatable                      | `"Todos" // Name in top`                                                                                                                                                                                                                                                             |
+| `columns`          | Columns                                         | ```[   // Array of objects   {     label: "Name", // Column name     field: "name", // Field name from row     // Use dot for nested props     // Can be function with row as 1st param     numeric: false, // Affects sorting     html: false // Escapes output if false.   } ];``` |
+| `rows`             | Rows                                            | ```[   // Array of objects   {     name: "test", // Whatever.     ...   } ];```                                                                                                                                                                                                      |
+| `perPage`          | Numbers of rows per page                        | `[10, 20, 30, 40, 50] (default) // Results per page``                                                                                                                                                                                                                                |
+| `defaultPerPage`   | Default rows per page                           | `10 (default) // Default results per page, otherwise it will be the first value of perPage`                                                                                                                                                                                          |
+| `onClick`          | Function to execute on click                    | `console.log('hey') // Function, row 1st param`                                                                                                                                                                                                                                      |
+| `clickable`        | Clickable rows. Will fire `row-click` event     | `true (default) // Row is passed in the event payload`                                                                                                                                                                                                                               |
+| `sortable`         | Cause column-click to sort                      | `true (default) // Whether sortable`                                                                                                                                                                                                                                                 |
+| `searchable`       | Add fuzzy search functionality                  | `true (default) // Whether searchable`                                                                                                                                                                                                                                               |
+| `exactSearch`      | Disable fuzzy search                            | `true (default) // Whether only exact matches are returned`                                                                                                                                                                                                                          |
+| `serverSearch`     | Server search is used to fetch data from server | `false (default) // If you wanna do server search then searchable and serverSearch must be true and use serverSearchFunc as callback.`                                                                                                                                               |
+| `serverSearchFunc` | Function for search search                      | `function // For this searchSearch criteria is must.`                                                                                                                                                                                                                                |
+| `paginate`         | Add footer next/prev. buttons                   | `true (default) // Whether paginated`                                                                                                                                                                                                                                                |
+| `exportable`       | Add button to export to Excel                   | `true (default) // Whether exportable`                                                                                                                                                                                                                                               |
+| `printable`        | Add printing functionality                      | `true (default) // Whether printable`                                                                                                                                                                                                                                                |
+| `customButtons`    | Custom buttons thingy                           | ``` [   // Array of objects   {     hide: false, // Whether to hide the button     icon: "search", // Materialize icon     onclick: aFunc() // Click handler   } ];```                                                                                                               |
 
 ### Localization
 
