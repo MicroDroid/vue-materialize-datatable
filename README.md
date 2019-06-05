@@ -104,11 +104,11 @@ Of course, code above will render garbage. Here are the props it accepts to rend
       <code>title</code>
     </td>
     <td>
-      The title of the datatable
+      <code>The title of the datatable</code>
     </td>
     <td>
-      <pre>
-        <code>
+      <code>
+        <pre>
 [ // Array of objects 
   {    
     label: "Name", // Column name
@@ -119,8 +119,8 @@ Of course, code above will render garbage. Here are the props it accepts to rend
     html: false    // Escapes output if false.
   } 
 ];
-        </code>
-      </pre>
+        </pre>
+      </code>
     </td>
   </tr>
 </table>
