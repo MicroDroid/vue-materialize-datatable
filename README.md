@@ -67,7 +67,7 @@ and then include it in your Sass/CSS files
 Include the component,
 
 ```javascript
-import DataTable from "vue-materialize-datatable";
+import DataTable from 'vue-materialize-datatable';
 ```
 
 Then, register the component, however you like:
@@ -151,7 +151,7 @@ Of course, code above will render garbage. Here are the props it accepts to rend
         <code>
 [ // Array of objects 
   {    
-    name: "test", // Whatever
+    name: 'test', // Whatever
     ...
   } 
 ];
