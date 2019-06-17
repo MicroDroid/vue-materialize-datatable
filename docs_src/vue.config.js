@@ -1,3 +1,6 @@
+const path = require('path');
+
 module.exports = {
-    publicPath: '/vue-materialize-datatable-demo-vue/'
-   } 
+  outputDir: path.join(__dirname, '..', 'docs'),
+  publicPath: '/vue-materialize-datatable/',
+};
