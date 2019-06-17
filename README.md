@@ -4,8 +4,6 @@
 
 ![Screenshot](http://i.imgur.com/15tApXu.png)
 
-> Library is kind of unstable. Bugs, missing features might be present
-
 ## Demo
 
 https://microdroid.github.io/vue-materialize-datatable/
