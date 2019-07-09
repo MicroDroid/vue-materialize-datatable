@@ -4,11 +4,9 @@
 
 ![Screenshot](http://i.imgur.com/15tApXu.png)
 
-> Library is kind of unstable. Bugs, missing features might be present
-
 ## Demo
 
-https://justice47.github.io/vue-materialize-datatable-demo-vue/
+https://microdroid.github.io/vue-materialize-datatable/
 
 ## Features
 
@@ -67,7 +65,7 @@ and then include it in your Sass/CSS files
 Include the component,
 
 ```javascript
-import DataTable from 'vue-materialize-datatable';
+import DataTable from "vue-materialize-datatable";
 ```
 
 Then, register the component, however you like:
@@ -309,7 +307,7 @@ true (default) // Whether exportable
       <code>printable</code>
     </td>
     <td>
-      Add printing functionality	
+      Add printing functionality  
     </td>
     <td>
       <pre>
@@ -405,17 +403,17 @@ Alright actually this is a hack. We probably should've implemented actual suppor
 
 ```HTML
 <datatable title="News" ...>
-	<th slot="thead-tr">
-		Actions
-	</th>
-	<template slot="tbody-tr" scope="props">
-		<td>
-			<button class="btn red darken-2 waves-effect waves-light compact-btn"
-					@click="(e) => deleteItem(props.row, e)">
-				<i class="material-icons white-text">delete</i>
-			</button>
-		</td>
-	</template>
+  <th slot="thead-tr">
+    Actions
+  </th>
+  <template slot="tbody-tr" scope="props">
+    <td>
+      <button class="btn red darken-2 waves-effect waves-light compact-btn"
+          @click="(e) => deleteItem(props.row, e)">
+        <i class="material-icons white-text">delete</i>
+      </button>
+    </td>
+  </template>
 </datatable>
 ```
 
