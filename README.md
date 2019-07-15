@@ -65,7 +65,7 @@ and then include it in your Sass/CSS files
 Include the component,
 
 ```javascript
-import DataTable from "vue-materialize-datatable";
+import DataTable from 'vue-materialize-datatable';
 ```
 
 Then, register the component, however you like:
@@ -307,7 +307,7 @@ true (default) // Whether exportable
       <code>printable</code>
     </td>
     <td>
-      Add printing functionality  
+      Add printing functionality
     </td>
     <td>
       <pre>
