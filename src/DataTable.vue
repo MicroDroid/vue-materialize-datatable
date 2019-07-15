@@ -66,8 +66,6 @@
 					</td>
 					<slot name="tbody-tr" :row="row"></slot>
 				</tr>
-				<slot name="body-center">
-				</slot>
 			</tbody>
 		</table>
 
@@ -141,13 +139,13 @@
 			exportable: {default: true},
 			printable: {default: true},
 			locale: {default: 'en'},
-			initSortCol: {default: 0}
+			initSortCol: {default: -1}
 		},
 
 		data: () => ({
 			currentPage: 1,
 			currentPerPage: 10,
-			sortColumn: 0,
+			sortColumn: -1,
 			sortType: 'asc',
 			searching: false,
 			searchInput: '',
