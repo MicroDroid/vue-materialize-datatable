@@ -140,13 +140,14 @@
 			paginate: {default: true},
 			exportable: {default: true},
 			printable: {default: true},
-			locale: {default: 'en'}
+			locale: {default: 'en'},
+			initSortCol: {default: 0}
 		},
 
 		data: () => ({
 			currentPage: 1,
 			currentPerPage: 10,
-			sortColumn: 1,
+			sortColumn: 0,
 			sortType: 'asc',
 			searching: false,
 			searchInput: '',
@@ -367,6 +368,7 @@
 			if (!(this.locale in locales))
 				console.error(`vue-materialize-datable: Invalid locale '${this.locale}'`);
 			this.currentPerPage = this.currentPerPage
+			this.sortColumn = this.initSortCol
 		}
 	}
 </script>
