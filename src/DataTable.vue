@@ -66,6 +66,11 @@
 					</td>
 					<slot name="tbody-tr" :row="row"></slot>
 				</tr>
+				<tr v-for="n in currentPerPage" v-if="rows.length===0&&loadingAnimation===true">
+					<td :colspan="columns.length">
+						<tb-skeleton :height="15" theme="opacity" bg-color="#dcdbdc" shape="radius"></tb-skeleton>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 
@@ -112,8 +117,14 @@
 <script>
 	import Fuse from 'fuse.js';
 	import locales from './locales';
+	import  'tb-skeleton/dist/skeleton.css'
+	import {TbSkeleton,Skeleton} from 'tb-skeleton'
 
 	export default {
+		components: {
+      TbSkeleton,
+      Skeleton
+    },
 		props: {
 			title: '',
 			columns: {},
@@ -138,7 +149,8 @@
 			paginate: {default: true},
 			exportable: {default: true},
 			printable: {default: true},
-			locale: {default: 'en'}
+			locale: {default: 'en'},
+			loadingAnimation: {default: true}
 		},
 
 		data: () => ({

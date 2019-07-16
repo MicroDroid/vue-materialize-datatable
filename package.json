@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.0.0",
+    "tb-skeleton": "^0.3.5",
     "vue": "^1.0.21",
     "fuse.js": "^2.6.2"
   },
