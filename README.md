@@ -186,6 +186,19 @@ first value of perPage
   </tr>
   <tr>
     <td>
+      <code>initSortCol</code>
+    </td>
+    <td>
+      Default column for sorting on component initialization
+    </td>
+    <td>
+      <pre>
+-1 (default) // By default table is not sorted by any column
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td>
       <code>onClick</code>
     </td>
     <td>
@@ -307,7 +320,7 @@ true (default) // Whether exportable
       <code>printable</code>
     </td>
     <td>
-      Add printing functionality  
+      Add printing functionality
     </td>
     <td>
       <pre>
