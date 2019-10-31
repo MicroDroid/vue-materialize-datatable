@@ -32,32 +32,6 @@
 				><i class="material-icons">menu</i></a>
 			</div>
 			<ul id="nav-mobile" class="sidenav sidenav-fixed">
-				<li class="logo">
-					<img
-						src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/512px-Vue.js_Logo_2.svg.png"
-						width="40px"
-						height="40px"
-					>
-				</li>
-				<!-- <li class="version">
-          <a href="#" data-target="version-dropdown" class="dropdown-trigger">
-            1.0.0
-          </a>
-          <ul id="version-dropdown" class="dropdown-content">
-            <li><a>1.0.0</a></li>
-            <li>
-              <a href="http://archives.materializecss.com/0.100.2/">0.100.2</a>
-            </li>
-          </ul>
-        </li> -->
-				<!-- <li class="search">
-          <div class="search-wrapper">
-            <input id="search" placeholder="Search" /><i class="material-icons"
-              >search</i
-            >
-            <div class="search-results"></div>
-          </div>
-        </li> -->
 				<li class="bold">
 					<a href="#basic" class="waves-effect waves-teal">Basic Example</a>
 				</li>
@@ -76,14 +50,6 @@
 				<li class="bold">
 					<a href="#row-buttons" class="waves-effect waves-teal">Row buttons</a>
 				</li>
-				<!-- <li class="bold">
-          <a href="themes.html" class="waves-effect waves-teal"
-            >New FunFunc!<span
-              data-badge-caption="updated"
-              class="new badge"
-            ></span
-          ></a>
-        </li> -->
 			</ul>
 		</header>
 
