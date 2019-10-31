@@ -1,42 +1,46 @@
 <template>
 	<div class="card material-table">
 		<div class="table-header">
-			<span class="table-title">{{title}}</span>
+			<span class="table-title">{{ title }}</span>
 			<div class="actions">
-				<a v-for="(button, index) in customButtons" href="javascript:undefined"
-				   class="waves-effect btn-flat nopadding"
-				   v-if="button.hide ? !button.hide : true"
-				   @click="button.onclick"
-				   :key="index"
-				   >
-					<i class="material-icons">{{button.icon}}</i>
-				</a>
-				<a href="javascript:undefined"
+				<a v-for="(button, index) in customButtons" v-if="button.hide ? !button.hide : true"
+					:key="index"
+					href="javascript:undefined"
 					class="waves-effect btn-flat nopadding"
-					v-if="this.printable"
-					@click="print">
+					@click="button.onclick"
+				>
+					<i class="material-icons">{{ button.icon }}</i>
+				</a>
+				<a v-if="printable"
+					href="javascript:undefined"
+					class="waves-effect btn-flat nopadding"
+					@click="print"
+				>
 					<i class="material-icons">print</i>
 				</a>
-				<a href="javascript:undefined"
+				<a v-if="exportable"
+					href="javascript:undefined"
 					class="waves-effect btn-flat nopadding"
-					v-if="this.exportable"
-					@click="exportExcel">
+					@click="exportExcel"
+				>
 					<i class="material-icons">description</i>
 				</a>
-				<a href="javascript:undefined"
+				<a v-if="searchable"
+					href="javascript:undefined"
 					class="waves-effect btn-flat nopadding"
-					v-if="this.searchable"
-					@click="search">
+					@click="search"
+				>
 					<i class="material-icons">search</i>
 				</a>
 			</div>
 		</div>
-		<div v-if="this.searching">
+		<div v-if="searching">
 			<div id="search-input-container">
 				<label>
-					<input type="search" id="search-input" class="form-control" :placeholder="lang['search_data']"
+					<input id="search-input" type="search" class="form-control" :placeholder="lang['search_data']"
 						:value="searchInput"
-						@input="(e) => {this.searchInput = e.target.value}">
+						@input="(e) => {searchInput = e.target.value}"
+					>
 				</label>
 			</div>
 		</div>
@@ -45,66 +49,91 @@
 				<tr>
 					<th v-for="(column, index) in columns"
 						:key="index"
-						@click="sort(index)"
 						:class="(sortable ? 'sorting ' : '')
 							+ (sortColumn === index ?
 								(sortType === 'desc' ? 'sorting-desc' : 'sorting-asc')
 								: '')
 							+ (column.numeric ? ' numeric' : '')"
-						:style="{width: column.width ? column.width : 'auto'}">
-						{{column.label}}
+						:style="{width: column.width ? column.width : 'auto'}"
+						@click="sort(index)"
+					>
+						{{ column.label }}
 					</th>
-					<slot name="thead-tr"></slot>
+					<slot name="thead-tr" />
 				</tr>
 			</thead>
 
 			<tbody>
-				<tr v-for="(row, index) in paginated" :class="{ clickable : clickable }" :key="index" @click="click(row)">
-					<td v-for="(column, columnIndex) in columns" :class=" { numeric : column.numeric } " :key="columnIndex">
-						<div v-if="!column.html"> {{ collect(row, column.field) }} </div>
-						<div v-if="column.html" v-html="collect(row, column.field)"></div>
+				<tr v-for="(row, index) in paginated"
+					:key="index"
+					:class="{ clickable : clickable }"
+					@click="click(row)"
+				>
+					<td v-for="(column, columnIndex) in columns"
+						:key="columnIndex"
+						:class="{ numeric : column.numeric }"
+					>
+						<div v-if="!column.html">
+							{{ collect(row, column.field) }}
+						</div>
+						<div v-if="column.html" v-html="collect(row, column.field)" />
 					</td>
-					<slot name="tbody-tr" :row="row"></slot>
+					<slot name="tbody-tr" :row="row" />
 				</tr>
-				<tr v-for="n in currentPerPage" v-if="rows.length===0&&loadingAnimation===true">
+				<tr
+					v-for="n in currentPerPage"
+					v-if="rows.length === 0 && loadingAnimation === true"
+				>
 					<td :colspan="columns.length">
-						<tb-skeleton :height="15" theme="opacity" bg-color="#dcdbdc" shape="radius"></tb-skeleton>
+						<tb-skeleton :height="15" theme="opacity" bg-color="#dcdbdc" shape="radius" />
 					</td>
 				</tr>
 			</tbody>
 		</table>
 
-		<div class="table-footer" v-if="paginate">
+		<div v-if="paginate" class="table-footer">
 			<div :class="{'datatable-length': true, 'rtl': lang.__is_rtl}">
 				<label>
-					<span>{{lang['rows_per_page']}}:</span>
+					<span>{{ lang['rows_per_page'] }}:</span>
 					<select class="browser-default" @change="onTableLength">
-						<option v-for="(option, index) in perPageOptions" :value="option" :selected="option == currentPerPage" :key="index">
-						{{ option === -1 ? lang['all'] : option }}
-					  </option>
+						<option v-for="(option, index) in perPageOptions"
+							:key="index"
+							:value="option"
+							:selected="option == currentPerPage"
+						>
+							{{ option === -1 ? lang['all'] : option }}
+						</option>
 					</select>
 				</label>
 			</div>
 			<div :class="{'datatable-info': true, 'rtl': lang.__is_rtl}">
-				<span>{{(currentPage - 1) * currentPerPage ? (currentPage - 1) * currentPerPage : 1}}
-					-{{Math.min(processedRows.length, currentPerPage * currentPage)}}
+				<span>{{ (currentPage - 1) * currentPerPage ? (currentPage - 1) * currentPerPage : 1 }}
+					-{{ Math.min(processedRows.length, currentPerPage * currentPage) }}
 				</span>
 				<span>
-					{{lang['out_of_pages']}}
+					{{ lang['out_of_pages'] }}
 				</span>
 				<span>
-					{{processedRows.length}}
+					{{ processedRows.length }}
 				</span>
 			</div>
 			<div>
 				<ul class="material-pagination">
 					<li>
-						<a href="javascript:undefined" class="waves-effect btn-flat" @click.prevent="previousPage" tabindex="0">
+						<a href="javascript:undefined"
+							class="waves-effect btn-flat"
+							tabindex="0"
+							@click.prevent="previousPage"
+						>
 							<i class="material-icons">chevron_left</i>
 						</a>
 					</li>
 					<li>
-						<a href="javascript:undefined" class="waves-effect btn-flat" @click.prevent="nextPage" tabindex="0">
+						<a href="javascript:undefined"
+							class="waves-effect btn-flat"
+							tabindex="0"
+							@click.prevent="nextPage"
+						>
 							<i class="material-icons">chevron_right</i>
 						</a>
 					</li>
@@ -115,43 +144,123 @@
 </template>
 
 <script>
+	import 'tb-skeleton/dist/skeleton.css';
+
 	import Fuse from 'fuse.js';
 	import locales from './locales';
-	import  'tb-skeleton/dist/skeleton.css'
-	import {TbSkeleton,Skeleton} from 'tb-skeleton'
+	import { TbSkeleton } from 'tb-skeleton';
 
 	export default {
 		components: {
-      TbSkeleton,
-      Skeleton
-    },
+			TbSkeleton,
+		},
+
 		props: {
-			title: '',
-			columns: {},
-			rows: {},
-			clickable: {default: true},
-			customButtons: {default: () => []},
-			perPage: {default: () => [10, 20, 30, 40, 50]},
-			defaultPerPage: {default: null},
-			sortable: {default: true},
-			searchable: {default: true},
+			title: {
+				type: String,
+				required: true,
+			},
+
+			columns: {
+				type: Array,
+				required: true,
+			},
+
+			rows: {
+				type: Array,
+				required: true,
+			},
+
+			clickable: {
+				type: Boolean,
+				required: false,
+				default: true,
+			},
+
+			customButtons: {
+				type: Function,
+				required: false,
+				default: () => [],
+			},
+
+			perPage: {
+				type: Array,
+				required: false,
+				default: () => [10, 20, 30, 40, 50],
+			},
+
+			defaultPerPage: {
+				type: Number,
+				required: false,
+				default: null,
+			},
+
+			sortable: {
+				type: Boolean,
+				required: false,
+				default: true,
+			},
+
+			searchable: {
+				type: Boolean,
+				required: false,
+				default: true,
+			},
+
 			exactSearch: {
 				type: Boolean,
-				default: false
+				required: false,
+				default: false,
 			},
+
 			serverSearch: {
 				type: Boolean,
-				default: false
+				required: false,
+				default: false,
 			},
+
 			serverSearchFunc: {
-				type: Function
+				type: Function,
+				required: false,
+				default: () => {},
 			},
-			paginate: {default: true},
-			exportable: {default: true},
-			printable: {default: true},
-			locale: {default: 'en'},
-			initSortCol: {default: -1}
-			loadingAnimation: {default: true},
+
+			paginate: {
+				type: Boolean,
+				required: false,
+				default: true,
+			},
+
+			exportable: {
+				type: Boolean,
+				required: false,
+				default: true,
+			},
+
+			printable: {
+				type: Boolean,
+				required: false,
+				default: true,
+			},
+
+			locale: {
+				type: String,
+				required: false,
+				default: 'en',
+			},
+
+			initSortCol: {
+				type: Number,
+				required: false,
+				default: -1,
+			},
+
+			loadingAnimation: {
+				type: Boolean,
+				required: false,
+				default: true,
+			},
+
 		},
 
 		data: () => ({
@@ -164,21 +273,21 @@
 		}),
 
 		methods: {
-			nextPage: function() {
+			nextPage() {
 				if (this.processedRows.length > this.currentPerPage * this.currentPage)
 					++this.currentPage;
 			},
 
-			previousPage: function() {
+			previousPage() {
 				if (this.currentPage > 1)
 					--this.currentPage;
 			},
 
-			onTableLength: function(e) {
+			onTableLength(e) {
 				this.currentPerPage = parseInt(e.target.value);
 			},
 
-			sort: function(index) {
+			sort(index) {
 				if (!this.sortable)
 					return;
 				if (this.sortColumn === index) {
@@ -189,52 +298,53 @@
 				}
 			},
 
-			search: function(e) {
+			search(e) {
 				this.searching = !this.searching;
 			},
 
-			click: function(row) {
+			click(row) {
 				if(!this.clickable){
-					return
+					return;
 				}
 
 				if(getSelection().toString()){
 					// Return if some text is selected instead of firing the row-click event.
-					return
+					return;
 				}
 
-				this.$emit('row-click', row)
+				this.$emit('row-click', row);
 			},
 
-			exportExcel: function() {
+			exportExcel() {
 				const mimeType = 'data:application/vnd.ms-excel';
 				const html = this.renderTable().replace(/ /g, '%20');
 
-				const documentPrefix = this.title != '' ? this.title.replace(/ /g, '-') : 'Sheet'
+				// eslint-disable-next-line eqeqeq
+				const documentPrefix = this.title != '' ? this.title.replace(/ /g, '-') : 'Sheet';
 				const d = new Date();
 
-				var dummy = document.createElement('a');
+				const dummy = document.createElement('a');
 				dummy.href = mimeType + ', ' + html;
 				dummy.download = documentPrefix
-					+ '-' + d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate()
+					+ '-' + d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
 					+ '-' + d.getHours() + '-' + d.getMinutes() + '-' + d.getSeconds()
-					+'.xls';
+					+ '.xls';
 				document.body.appendChild(dummy);
 				dummy.click();
 			},
 
-			print: function() {
-				let win = window.open("");
+			print() {
+				let win = window.open('');
 				win.document.write(this.renderTable());
 				win.print();
 				win.close();
 			},
 
-			renderTable: function() {
-				var table = '<table><thead>';
+			renderTable() {
+				let table = '<table><thead>';
 
 				table += '<tr>';
-				for (var i = 0; i < this.columns.length; i++) {
+				for (let i = 0; i < this.columns.length; i++) {
 					const column = this.columns[i];
 					table += '<th>';
 					table += 	column.label;
@@ -244,10 +354,10 @@
 
 				table += '</thead><tbody>';
 
-				for (var i = 0; i < this.rows.length; i++) {
+				for (let i = 0; i < this.rows.length; i++) {
 					const row = this.rows[i];
 					table += '<tr>';
-					for (var j = 0; j < this.columns.length; j++) {
+					for (let j = 0; j < this.columns.length; j++) {
 						const column = this.columns[j];
 						table += '<td>';
 						table +=	this.collect(row, column.field);
@@ -261,11 +371,11 @@
 				return table;
 			},
 
-			dig: function(obj, selector) {
-				var result = obj;
+			dig(obj, selector) {
+				let result = obj;
 				const splitter = selector.split('.');
 
-				for (let i = 0; i < splitter.length; i++){
+				for (let i = 0; i < splitter.length; i++) {
 					if (result == undefined)
 						return undefined;
 
@@ -275,19 +385,19 @@
 				return result;
 			},
 
-			collect: function(obj, field) {
+			collect(obj, field) {
 				if (typeof(field) === 'function')
 					return field(obj);
 				else if (typeof(field) === 'string')
 					return this.dig(obj, field);
 				else
 					return undefined;
-			}
+			},
 		},
 
 		computed: {
-			perPageOptions: function() {
-				var options = (Array.isArray(this.perPage) && this.perPage) || [10, 20, 30, 40, 50];
+			perPageOptions() {
+				let options = (Array.isArray(this.perPage) && this.perPage) || [10, 20, 30, 40, 50];
 
 				// Force numbers
 				options = options.map( v => parseInt(v));
@@ -308,38 +418,39 @@
 
 				return options;
 			},
-			processedRows: function() {
-				var computedRows = this.rows;
+
+			processedRows() {
+				let computedRows = this.rows;
 
 				if (this.sortable !== false)
 					computedRows = computedRows.sort((x,y) => {
 						if (!this.columns[this.sortColumn])
 							return 0;
 
-						const cook = (x) => {
+						const cook = x => {
 							x = this.collect(x, this.columns[this.sortColumn].field);
 							if (typeof(x) === 'string') {
 								x = x.toLowerCase();
-							 	if (this.columns[this.sortColumn].numeric)
+								if (this.columns[this.sortColumn].numeric)
 									x = x.indexOf('.') >= 0 ? parseFloat(x) : parseInt(x);
 							}
 							return x;
-						}
+						};
 
 						x = cook(x);
 						y = cook(y);
 
 						return (x < y ? -1 : (x > y ? 1 : 0)) * (this.sortType === 'desc' ? -1 : 1);
-					})
+					});
 
 				if (this.searching && this.searchInput) {
 
 					if(this.serverSearch) {
-						this.serverSearchFunc(this.searchInput)
-						return
+						this.serverSearchFunc(this.searchInput);
+						return;
 					}
 
-					const searchConfig = { keys: this.columns.map(c => c.field) }
+					const searchConfig = { keys: this.columns.map(c => c.field) };
 
 					// Enable searching of numbers (non-string)
 					// Temporary fix of https://github.com/krisk/Fuse/issues/144
@@ -348,12 +459,12 @@
 						if(Number.isInteger(property))
 							return JSON.stringify(property);
 						return property;
-					}
+					};
 
 					if(this.exactSearch){
 						//return only exact matches
 						searchConfig.threshold = 0,
-						searchConfig.distance = 0
+						searchConfig.distance = 0;
 					}
 
 					computedRows = (new Fuse(computedRows, searchConfig)).search(this.searchInput);
@@ -362,25 +473,30 @@
 				return computedRows;
 			},
 
-			paginated: function() {
-				var paginatedRows = this.processedRows;
+			paginated() {
+				let paginatedRows = this.processedRows;
+
 				if (this.paginate)
-					paginatedRows = paginatedRows.slice((this.currentPage - 1) * this.currentPerPage, this.currentPerPage === -1 ? paginatedRows.length + 1 : this.currentPage * this.currentPerPage);
+					paginatedRows = paginatedRows.slice(
+						(this.currentPage - 1) * this.currentPerPage,
+						this.currentPerPage === -1 ? paginatedRows.length + 1 : this.currentPage * this.currentPerPage
+					);
+
 				return paginatedRows;
 			},
 
-			lang: function() {
+			lang() {
 				return this.locale in locales ? locales[this.locale] : locales['en'];
-			}
+			},
 		},
 
-		mounted: function() {
+		mounted() {
 			if (!(this.locale in locales))
 				console.error(`vue-materialize-datable: Invalid locale '${this.locale}'`);
-			this.currentPerPage = this.currentPerPage
-			this.sortColumn = this.initSortCol
-		}
-	}
+			this.currentPerPage = this.currentPerPage;
+			this.sortColumn = this.initSortCol;
+		},
+	};
 </script>
 
 <style scoped>
@@ -590,7 +706,7 @@
 	}
 
 	table th.sorting:after,
-	table th.sorting-asc:after  {
+	table th.sorting-asc:after {
 		font-family: 'Material Icons';
 		font-weight: normal;
 		font-style: normal;
