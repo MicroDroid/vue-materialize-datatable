@@ -38,8 +38,7 @@
 			<div id="search-input-container">
 				<label>
 					<input id="search-input" type="search" class="form-control" :placeholder="lang['search_data']"
-						:value="searchInput"
-						@input="(e) => {searchInput = e.target.value}"
+						v-model="searchInput"
 					>
 				</label>
 			</div>
@@ -451,15 +450,30 @@
 			},
 		},
 
+		watch: {
+			perPageOptions(newOptions, oldOptions) {
+				// If defaultPerPage is provided and it's a valid option, set as current per page
+				if (newOptions.indexOf(this.defaultPerPage) > -1) {
+					this.currentPerPage = parseInt(this.defaultPerPage);
+				} else {
+					// Set current page to first value
+					this.currentPerPage = newOptions[0];
+				}
+			},
+
+			searchInput(newSearchInput) {
+				if (this.searching && this.serverSearch && this.serverSearchFunc)
+					this.serverSearchFunc(newSearchInput);
+			},
+		},
+
 		computed: {
 			perPageOptions() {
 				let options = (Array.isArray(this.perPage) && this.perPage) || [10, 20, 30, 40, 50];
 
 				// Force numbers
-				options = options.map( v => parseInt(v));
+				options = options.map(v => parseInt(v));
 
-				// Set current page to first value
-				this.currentPerPage = options[0];
 
 				// Sort options
 				options.sort((a,b) => a - b);
@@ -467,10 +481,6 @@
 				// And add "All"
 				options.push(-1);
 
-				// If defaultPerPage is provided and it's a valid option, set as current per page
-				if (options.indexOf(this.defaultPerPage) > -1) {
-					this.currentPerPage = parseInt(this.defaultPerPage);
-				}
 
 				return options;
 			},
@@ -499,13 +509,7 @@
 						return (x < y ? -1 : (x > y ? 1 : 0)) * (this.sortType === 'desc' ? -1 : 1);
 					});
 
-				if (this.searching && this.searchInput) {
-
-					if(this.serverSearch) {
-						this.serverSearchFunc(this.searchInput);
-						return;
-					}
-
+				if (this.searching && !this.serverSearch && this.searchInput) {
 					const searchConfig = { keys: this.columns.map(c => c.field) };
 
 					// Enable searching of numbers (non-string)
@@ -517,7 +521,7 @@
 						return property;
 					};
 
-					if(this.exactSearch){
+					if (this.exactSearch) {
 						//return only exact matches
 						searchConfig.threshold = 0,
 						searchConfig.distance = 0;
@@ -549,7 +553,6 @@
 		mounted() {
 			if (!(this.locale in locales))
 				console.error(`vue-materialize-datable: Invalid locale '${this.locale}'`);
-			this.currentPerPage = this.currentPerPage;
 			this.sortColumn = this.initSortCol;
 		},
 	};

@@ -437,6 +437,30 @@ data() {
 						/>
 					</div>
 				</div>
+				<div id="loading" class="row scrollspy" style="margin-bottom: 0;">
+					<div
+						class="col s12 m8 offset-m1 xl11 offset-xl1 center-on-small-only"
+					>
+						<h3 class="header">
+							Loading animation
+						</h3>
+						<p>Table with empty array of rows</p>
+						<prism language="html">
+&lt;datatable
+	title="Table with loading animation"
+	:columns="tableColumns1"
+	:rows="[]"
+	:perPage="[3, 5, 10]"
+/&gt;
+						</prism>
+						<datatable
+							title="Table with loading animation"
+							:columns="tableColumns1"
+							:rows="[]"
+							:per-page="[3, 5, 10]"
+						/>
+					</div>
+				</div>
 				<div id="row-buttons" class="row scrollspy" style="margin-bottom: 0;">
 					<div
 						class="col s12 m8 offset-m1 xl11 offset-xl1 center-on-small-only"
