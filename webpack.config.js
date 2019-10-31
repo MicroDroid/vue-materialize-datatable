@@ -84,7 +84,7 @@ module.exports = {
 		}),
 
         new CopyWebpackPlugin([
-            { from: './docs_src/assets/images/' },
+            { from: './docs_src/assets/images', to: 'images/' },
             { from: './docs_src/.nojekyll' },
         ]),
 	],
