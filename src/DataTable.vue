@@ -561,6 +561,7 @@
 <style scoped>
 	div.material-table {
 		padding: 0;
+		overflow-x: scroll;
 	}
 
 	tr.clickable {
