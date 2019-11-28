@@ -97,7 +97,7 @@
 					<select class="browser-default" @change="onTableLength">
 						<option v-for="(option, index) in perPageOptions"
 							:key="index"
-							:value="option"
+							:value="option === -1 ? rows.length : option"
 							:selected="option == currentPerPage"
 						>
 							{{ option === -1 ? lang['all'] : option }}
