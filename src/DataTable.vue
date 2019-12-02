@@ -79,14 +79,16 @@
 					</td>
 					<slot name="tbody-tr" :row="row" />
 				</tr>
-				<tr
-					v-for="n in currentPerPage"
-					v-if="rows.length === 0 && loadingAnimation === true"
-				>
-					<td :colspan="columns.length">
-						<tb-skeleton :height="15" theme="opacity" bg-color="#dcdbdc" shape="radius" />
-					</td>
-				</tr>
+
+				<template v-if="rows.length === 0 && loadingAnimation === true">
+					<tr v-for="n in (currentPerPage === -1 ? 10 : currentPerPage)"
+						:key="n"
+					>
+						<td :colspan="columns.length">
+							<tb-skeleton :height="15" theme="opacity" bg-color="#dcdbdc" shape="radius" />
+						</td>
+					</tr>
+				</template>
 			</tbody>
 		</table>
 
@@ -536,7 +538,7 @@
 			paginated() {
 				let paginatedRows = this.processedRows;
 
-				if (this.paginate)
+				if (this.paginate && this.currentPerPage !== -1)
 					paginatedRows = paginatedRows.slice(
 						(this.currentPage - 1) * this.currentPerPage,
 						this.currentPerPage === -1 ? paginatedRows.length + 1 : this.currentPage * this.currentPerPage
