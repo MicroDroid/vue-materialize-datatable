@@ -363,6 +363,7 @@ You can use the property `locale` to set the display language. Available languag
 - `br` (Brazilian Portuguese)
 - `nl` (Netherlands)
 - `fr` (French)
+- `de` (German)
 
 > You can very easily contribute a locale. Just clone `locales/en.json` and `require` in `locales/index.js`
 

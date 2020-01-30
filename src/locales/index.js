@@ -6,4 +6,5 @@ module.exports = {
 	cat: require('./cat.json'),
 	fr: require('./fr.json'),
 	nl: require('./nl.json'),
+	de: require('./de.json'),
 };
