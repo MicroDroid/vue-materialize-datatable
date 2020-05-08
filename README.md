@@ -1,6 +1,8 @@
 # vue-materialize-datatable [![NPM version](https://badge.fury.io/js/vue-materialize-datatable.svg)](https://badge.fury.io/js/vue-materialize-datatable) [![Snippets Stats](https://codebottle.io/embed/search-badge?keywords=vue%20materialize%20datatable&language=6)](https://codebottle.io/?q=vue%20materialize%20datatable)
 
 > A fancy Materialize CSS datatable VueJS component
+<!-- -->
+> Donate [here](bitcoin:1Khkw1pXLM6tLZk157RkUqyziBd54xvNNr)
 
 ![Screenshot](http://i.imgur.com/15tApXu.png)
 
