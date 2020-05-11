@@ -2,7 +2,7 @@
 
 > A fancy Materialize CSS datatable VueJS component
 <!-- -->
-> BTC donations: `1Khkw1pXLM6tLZk157RkUqyziBd54xvNNr`
+> BTC donations: `16dt5DdjGvduZ3KZcFrwsBA82qqfrcbeUQ`
 
 ![Screenshot](http://i.imgur.com/15tApXu.png)
 
