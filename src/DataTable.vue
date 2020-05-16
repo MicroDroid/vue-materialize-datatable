@@ -179,7 +179,7 @@
 			},
 
 			customButtons: {
-				type: Function,
+				type: Array,
 				required: false,
 				default: () => [],
 			},
