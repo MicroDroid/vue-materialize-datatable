@@ -1,60 +1,60 @@
 {
-  "name": "vue-materialize-datatable",
-  "version": "1.0.2",
-  "description": "Datatable for VueJS with Materialize",
-  "author": "Yousef Sultan <yousef.su.2000@gmail.com>",
-  "private": false,
-  "main": "./src/DataTable.vue",
-  "license": "MIT",
-  "scripts": {
-    "docs:dev": "cross-env NODE_ENV=development webpack --progress --hide-modules --watch",
-    "docs:prod": "cross-env NODE_ENV=production webpack --progress --hide-modules"
-  },
-  "keywords": [
-    "Vue",
-    "Datatable",
-    "Materialize",
-    "Table Component"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MicroDroid/vue-materialize-datatable.git"
-  },
-  "homepage": "https://github.com/MicroDroid/vue-materialize-datatable",
-  "bugs": {
-    "url": "https://github.com/MicroDroid/vue-materialize-datatable/issues"
-  },
-  "dependencies": {
-    "fuse.js": "^2.6.2",
-    "html-webpack-plugin": "^3.2.0",
-    "tb-skeleton": "^0.3.5",
-    "vue": "^2.6.10"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.6.4",
-    "@babel/plugin-syntax-object-rest-spread": "^7.2.0",
-    "@babel/plugin-transform-runtime": "^7.6.2",
-    "@babel/preset-env": "^7.6.3",
-    "babel-loader": "^8.0.6",
-    "copy-webpack-plugin": "^5.0.4",
-    "cross-env": "^6.0.3",
-    "eslint": "^6.6.0",
-    "eslint-plugin-vue": "^5.2.3",
-    "file-loader": "^4.2.0",
-    "highlight.js": "^9.15.10",
-    "materialize-css": "^1.0.0",
-    "mini-css-extract-plugin": "^0.8.0",
-    "node-sass": "^4.13.0",
-    "optimize-css-assets-webpack-plugin": "^5.0.3",
-    "prismjs": "^1.17.1",
-    "sass-loader": "^8.0.0",
-    "terser-webpack-plugin": "^2.2.1",
-    "vue-highlight.js": "^3.1.0",
-    "vue-loader": "^15.7.1",
-    "vue-prism-component": "^1.1.1",
-    "vue-style-loader": "^4.1.2",
-    "vue-template-compiler": "^2.6.10",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.9"
-  }
+	"name": "vue-materialize-datatable",
+	"version": "1.0.3",
+	"description": "Datatable for VueJS with Materialize",
+	"author": "Yousef Sultan <yousef.su.2000@gmail.com>",
+	"private": false,
+	"main": "./src/DataTable.vue",
+	"license": "MIT",
+	"scripts": {
+		"docs:dev": "cross-env NODE_ENV=development webpack --progress --hide-modules --watch",
+		"docs:prod": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+	},
+	"keywords": [
+		"Vue",
+		"Datatable",
+		"Materialize",
+		"Table Component"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/MicroDroid/vue-materialize-datatable.git"
+	},
+	"homepage": "https://github.com/MicroDroid/vue-materialize-datatable",
+	"bugs": {
+		"url": "https://github.com/MicroDroid/vue-materialize-datatable/issues"
+	},
+	"dependencies": {
+		"fuse.js": "^2.6.2",
+		"html-webpack-plugin": "^3.2.0",
+		"tb-skeleton": "^0.3.5",
+		"vue": "^2.6.10"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.6.4",
+		"@babel/plugin-syntax-object-rest-spread": "^7.2.0",
+		"@babel/plugin-transform-runtime": "^7.6.2",
+		"@babel/preset-env": "^7.6.3",
+		"babel-loader": "^8.0.6",
+		"copy-webpack-plugin": "^5.0.4",
+		"cross-env": "^6.0.3",
+		"eslint": "^6.6.0",
+		"eslint-plugin-vue": "^5.2.3",
+		"file-loader": "^4.2.0",
+		"highlight.js": "^9.15.10",
+		"materialize-css": "^1.0.0",
+		"mini-css-extract-plugin": "^0.8.0",
+		"node-sass": "^4.13.0",
+		"optimize-css-assets-webpack-plugin": "^5.0.3",
+		"prismjs": "^1.17.1",
+		"sass-loader": "^8.0.0",
+		"terser-webpack-plugin": "^2.2.1",
+		"vue-highlight.js": "^3.1.0",
+		"vue-loader": "^15.7.1",
+		"vue-prism-component": "^1.1.1",
+		"vue-style-loader": "^4.1.2",
+		"vue-template-compiler": "^2.6.10",
+		"webpack": "^4.41.2",
+		"webpack-cli": "^3.3.9"
+	}
 }
