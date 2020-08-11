@@ -467,6 +467,12 @@
 				if (this.searching && this.serverSearch && this.serverSearchFunc)
 					this.serverSearchFunc(newSearchInput);
 			},
+
+			rows(newRows, oldRows) {
+				// If the number of rows change, reset the currentPage to 1
+				if(newRows !== oldRows)
+					this.currentPage = 1;
+			},
 		},
 
 		computed: {
