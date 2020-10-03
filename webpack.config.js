@@ -25,8 +25,7 @@ module.exports = {
 	},
 
 	module: {
-		rules: [
-			{
+		rules: [{
 				test: /\.vue$/,
 				loader: 'vue-loader',
 			},
@@ -83,10 +82,14 @@ module.exports = {
 			filename: path.join(__dirname, 'docs', 'index.html'),
 		}),
 
-        new CopyWebpackPlugin([
-            { from: './docs_src/assets/images', to: 'images/' },
-            { from: './docs_src/.nojekyll' },
-        ]),
+		new CopyWebpackPlugin([{
+				from: './docs_src/assets/images',
+				to: 'images/',
+			},
+			{
+				from: './docs_src/.nojekyll',
+			},
+		]),
 	],
 
 	...isProd ? {
