@@ -148,6 +148,7 @@
 	import 'tb-skeleton/dist/skeleton.css';
 
 	import Fuse from 'fuse.js';
+	import moment from 'moment';
 	import locales from './locales';
 	import { TbSkeleton } from 'tb-skeleton';
 
@@ -504,9 +505,13 @@
 						const cook = x => {
 							x = this.collect(x, this.columns[this.sortColumn].field);
 							if (typeof(x) === 'string') {
-								x = x.toLowerCase();
-								if (this.columns[this.sortColumn].numeric)
-									x = x.indexOf('.') >= 0 ? parseFloat(x) : parseInt(x);
+								if (moment(x).isValid()) {
+									x = moment(x);
+								} else {
+									x = x.toLowerCase();
+									if (this.columns[this.sortColumn].numeric)
+										x = x.indexOf('.') >= 0 ? parseFloat(x) : parseInt(x);
+								}
 							}
 							return x;
 						};
